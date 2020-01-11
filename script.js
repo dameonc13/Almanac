@@ -1,70 +1,55 @@
-$(document).ready(function() {
-// This is our API key
-var APIKey = "46e10682b797bc3fd80bbc8e8f437f42";
-// QueryURL
-var queryURL = "https://api.openweathermap.org/data/2.5/weather?" + "q=New York,us&appid=" + APIKey;
-//date and time
-var dateTime = moment().format('MMMM Do YYYY');
-//input from text field
-var textInput = "#city-name";
+$(document).ready(function(e){
 
-// Here we run our AJAX call to the OpenWeatherMap API
-$.ajax({
-  url: queryURL,
-  method: "GET"
-})
-  // We store all of the retrieved data inside of an object called "response"
-  .then(function(response) {
+    /*
+    * today's date
+    */
+    var today = moment().format("M/D");
+    
+    onThisDay();
 
-    console.log(queryURL);
-    console.log(response);
+    /*
+    * On this Day in History
+    * Finds a fun historical event from this day and populates a tile.
+    */
+    function onThisDay(){
+        let url = "https://byabbe.se/on-this-day/";
+        let date = moment().format("M/D");
+        let query = url + date + "/events.json";
+        
+        //fact object, holds relevant info for todays fact
+        let fact = {
+            date: "",
+            year: "",
+            description: "",
 
-    // Transfer content to HTML
-    $(".city").html("<h1>" + response.name +" "+ dateTime, "</h1>");
-    $(".temp").html("<h2>" + "Temp (F) = " + response.main.temp, "</h2>");
-    $(".humidity").html("<h2>" + "Humidity: " + response.main.humidity, "</h2>");
-    $(".wind").html("<h2>" + "Wind Speed: " + response.wind.speed, "</h2>");
-    $(".uv").html("<h2>" + "UV Index: " + response.wind.speed, "<h2>");
+            wikipedia: {
+                title: "",
+                link: ""
+            },
+        }
 
-    // Converts the temp to Kelvin with the below formula
-   // var tempF = (response.main.temp - 273.15) * 1.80 + 32;
-    //$(".tempF").text("Temperature (Kelvin) " + tempF);
+        console.log(query);
 
-    // Log the data in the console as well
-    console.log("Wind Speed: " + response.wind.speed);
-    console.log("Humidity: " + response.main.humidity);
-    console.log("Temperature (F): " + response.main.temp);
-  });
+        $.ajax({
+            url: query,
+            method: "GET"
+            }).then(function(data) {
+                console.log(data);
+                let index = Math.round(Math.random() * data.events.length);
+                console.log("random: " + index);
 
- 
+                fact.date = data.date;
+                fact.year = data.events[index].year;
+                fact.description = data.events[index].description;
+                fact.wikipedia.title = data.events[index].wikipedia[0].title;
+                fact.wikipedia.link = data.events[index].wikipedia[1].wikipedia;
 
-  
+                console.log("fact: " + fact);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                $(".onThisDayTitle").html(fact.date + ", " + fact.year);
+                $(".onThisDaySubtitle").html(fact.description);
+                $("#wikipediaTitle").html(fact.wikipedia.title);
+                $(".onThisDayContent").html("<a href=\"" + fact.wikipedia.link + "\" target=\"_blank\">Learn more</a>");
+        });
+    }
 });
-
-
-
-
