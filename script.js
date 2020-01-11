@@ -42,7 +42,7 @@ $(document).ready(function(e){
                 fact.year = data.events[index].year;
                 fact.description = data.events[index].description;
                 fact.wikipedia.title = data.events[index].wikipedia[0].title;
-                fact.wikipedia.link = data.events[index].wikipedia[1].wikipedia;
+                fact.wikipedia.link = data.events[index].wikipedia[0].wikipedia;
 
                 console.log("fact: " + fact);
 
