@@ -5,7 +5,8 @@ $(document).ready(function(e){
     */
     var today = moment().format("M/D");
     
-    onThisDay();
+    //onThisDay();
+    wordOfTheDay();
 
     /*
     * On this Day in History
@@ -51,5 +52,59 @@ $(document).ready(function(e){
                 $("#wikipediaTitle").html(fact.wikipedia.title);
                 $(".onThisDayContent").html("<a href=\"" + fact.wikipedia.link + "\" target=\"_blank\">Learn more</a>");
         });
+    }
+
+    /*
+    * Determines random word of the day and outputs definition, etc
+    */
+    function wordOfTheDay(){
+        let key = "?key=64670138-b960-4366-9959-b8fdc5ecef9e";
+        let url = "https://dictionaryapi.com/api/v3/references/collegiate/json/";
+        let wordOfDay = "school";
+        let query = url + wordOfDay + key;
+
+        //object which stores each word
+        let word = {
+            title: "",
+            definition: [],
+            partOfSpeech: "",
+        }
+        
+        //create new word instances
+        wordOne = Object.assign(word);
+        wordTwo = Object.assign(word);
+        wordThree = Object.assign(word);
+
+        //array of words, to house word objects (as defined above)
+        //house up to three objects?
+        let wordArray = [];
+
+        $.ajax({
+            url: query,
+            method: "GET"
+            
+            }).then(function(data){
+                
+                //assign values in words
+                wordOne.title = wordOfDay;
+                wordOne.definition = data[0].shortdef;
+                wordOne.partOfSpeech = data[0].fl;
+
+                wordTwo.title = wordOfDay;
+                wordTwo.definition = data[1].shortdef;
+                wordTwo.partOfSpeech = data[1].fl;
+
+                wordThree.title = wordOfDay;
+                wordThree.definition = data[2].shortdef;
+                wordThree.partOfSpeech = data[2].fl;
+                
+                //push to word array
+                wordArray.push(wordOne);
+                wordArray.push(wordTwo);
+                wordArray.push(wordThree);
+
+                console.log(wordArray);
+            });
+        
     }
 });
