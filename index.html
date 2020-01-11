@@ -20,7 +20,26 @@
             <div class="tile is-parent is-vertical">
               <article class="tile is-child notification is-primary">
                 <p class="title">Weather</p>
-                <p class="subtitle">Top tile</p>
+                <p class="subtitle">Daily Weather Forecast</p>
+                <div class="date"></div>
+                <div class="alert"></div>
+                <div class="weather container">
+                  <div class="weaher-icon"><img src="icon/unknown.png"></div>
+                  <div class="temperature-value"><p>- &#176;<span></span>F</p></div>
+                  <div class="temperature-description"><p> - </p> </div>
+                  <div class="location"><p> - </p></div>
+                </div>
+
+                <div class="form-group">
+                  <label for="search">City:</label>
+                  <input type="text" class="form-control" id="City">
+                </div>
+                <div class="city"></div>
+                <div class="date"></div>
+                <div class="temp"></div>
+                <div class="humidity"></div>
+                <div class="wind"></div>
+                <div class="img"></div>
               </article>
               <!-- on this day -->
               <article class="tile is-child notification is-warning onThisDayTile">
