@@ -5,7 +5,7 @@ $(document).ready(function (e) {
     */
     var today = moment().format("M/D");
 
-    onThisDay();
+    // onThisDay();
 
     /*
     * On this Day in History
@@ -53,22 +53,52 @@ $(document).ready(function (e) {
         });
     }
 
+
     let alertElement = $(".alert");
     let weatherIcon = $(".weather-icon");
     let tempValue = $(".temperature-value");
     let tempDescription = $(".temperature-description");
     let locationElement = $(".location");
     let dateElemenet = $(".date");
+    let cityElement = $("#weather-city");
+    let btnElement = $(".weather-btn");
+    let citySearch = "";
 
-
+    // //create current date using moment.js 
     var d = moment().format('LLLL');
     $(".date").append(d);
-    // const weather = {
-    //     temperature: {
-    //         value: 18,
-    //         unit: "fahrenheit"
-    //     }, 
-    // }
+    console.log(d);
+
+    //create api key and url links 
+    let APIkey = "e1014510ebbf942b1f1d07d44fa4f59b";
+
+    //  create onclick button to call search function 
+    $(".weather-btn").on("click", function (event) {
+        event.preventDefault();
+        //this variable collects the user infomation from the text area
+        citySearch = $("#weather-city").val().trim()
+        console.log(citySearch);
+        let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
+        $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                })
+        
+                .then(function(data) {
+                    console.log(data);
+                    
+                });
+            })
+    })
+    
+
+    
+
+   
+
+    
+    
+
+   
 
 
-});
