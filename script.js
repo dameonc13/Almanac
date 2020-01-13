@@ -89,7 +89,7 @@ $(document).ready(function (e) {
                 console.log(data);
                 //set weather data to local storage 
                 localStorage.setItem("cityElement", citySearch);
-                localStorage.setItem("temperature", data.main.temp);
+                localStorage.setItem("temperature", data.main.temp + "" + "º" + "F");
                 // localStorage.setItem("min-temperature", data.main.temp_min);
                 // localStorage.setItem("unit");
                 localStorage.setItem("description", data.weather.description);
@@ -99,11 +99,11 @@ $(document).ready(function (e) {
 
 
             });
-//display weather data result from storage for HTML page when called 
+//display weather data result from storage to HTML page when called 
 
    var storedWeather = localStorage.getItem("cityElement");
     cityElement.text(storedWeather); 
-    // console.log(storedWeather);
+    console.log(storedWeather);
 
     var storedTemp = localStorage.getItem("temperature");
     tempValue.text(storedTemp);
@@ -113,7 +113,13 @@ $(document).ready(function (e) {
 
     var storedIcon = localStorage.getItem("icon");
     weatherIcon.text(storedIcon);
+
+    var storedLocation = localStorage.getItem("city");
+    locationElement.text(storedLocation);
   
+    
+    
+   
 
     })
 })
