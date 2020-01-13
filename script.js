@@ -92,8 +92,8 @@ $(document).ready(function (e) {
                 localStorage.setItem("temperature", data.main.temp + "" + "º" + "F");
                 // localStorage.setItem("min-temperature", data.main.temp_min);
                 // localStorage.setItem("unit");
-                localStorage.setItem("description", data.weather.description);
-                localStorage.setItem("icon", data.weather.icon);
+                localStorage.setItem("description", data.weather[0].description);
+                localStorage.setItem("icon", data.weather[0].icon);
                 localStorage.setItem("city", data.name);
                 localStorage.setItem("country", data.sys.country);
 
@@ -110,7 +110,7 @@ $(document).ready(function (e) {
 
     var storedDecrip = localStorage.getItem("description");
     tempDescription.text(storedDecrip);
-
+console.log(storedDecrip);
     var storedIcon = localStorage.getItem("icon");
     weatherIcon.text(storedIcon);
 
