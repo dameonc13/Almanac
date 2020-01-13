@@ -54,11 +54,11 @@ $(document).ready(function (e) {
     }
 
 
-    let alertElement = $(".alert");
+    let alertElement = $(".weather-notification");
     let weatherIcon = $(".weather-icon");
     let tempValue = $(".temperature-value");
     let tempDescription = $(".temperature-description");
-    let locationElement = $(".location");
+    let locationElement = $(".weather-location");
     let dateElemenet = $(".date");
     let cityElement = $("#weather-city");
     let btnElement = $(".weather-btn");
@@ -75,30 +75,41 @@ $(document).ready(function (e) {
     //  create onclick button to call search function 
     $(".weather-btn").on("click", function (event) {
         event.preventDefault();
+
         //this variable collects the user infomation from the text area
         citySearch = $("#weather-city").val().trim()
         console.log(citySearch);
         let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
         $.ajax({
-                    url: queryURL,
-                    method: "GET"
-                })
-        
-                .then(function(data) {
-                    console.log(data);
-                    
-                });
-            })
+            url: queryURL,
+            method: "GET"
+        })
+
+            .then(function (data) {
+                console.log(data);
+                //set weather data to local storage 
+                localStorage.setItem("cityElement", citySearch);
+                localStorage.setItem("max-temperature", data.main.temp);
+                localStorage.setItem("min-temperature", data.main.temp_min);
+                // localStorage.setItem("unit");
+                localStorage.setItem("description", data.weather.description);
+                localStorage.setItem("icon", data.weather.icon);
+                localStorage.setItem("city", data.name);
+                localStorage.setItem("country", data.sys.country);
+
+
+            });
     })
-    
+})
 
-    
 
-   
 
-    
-    
 
-   
+
+
+
+
+
+
 
 
