@@ -21,9 +21,9 @@ $(document).ready(function(e){
             url: query,
             method: "GET"
             }).then(function(data) {
+                
                 //holds index for api object
                 let index = Math.round(Math.random() * data.events.length);
-                console.log("onthisDay Index = " + index)
 
                 //add to html
                 $(".onThisDayTitle").html(data.date + ", " + data.events[index].year);
@@ -40,10 +40,24 @@ $(document).ready(function(e){
         let key = "?key=64670138-b960-4366-9959-b8fdc5ecef9e";
         let url = "https://dictionaryapi.com/api/v3/references/collegiate/json/";
 
-        let randomIndex = Math.floor((Math.random() * dictionary.length) + 1);
-        console.log("word of day index = " + randomIndex)
-        let wordOfDay = dictionary[randomIndex];
+        let randomIndex = localStorage.getItem("wordIndex");
 
+        //if first load, set today in local storage, else: if it is a new day, generate new random number and save to local storage
+        if(localStorage.getItem("today") == null){
+            localStorage.setItem("today", today);
+        }else if(localStorage.getItem("today") != today){
+            localStorage.setItem("today", today);
+            randomIndex = Math.floor((Math.random() * dictionary.length) + 1);
+            localStorage.setItem("wordIndex", randomIndex);
+        }
+        //if number is null, generate new random number and save to local storage
+        if(randomIndex === null){
+            randomIndex = Math.floor((Math.random() * dictionary.length) + 1);
+            localStorage.setItem("wordIndex", randomIndex);
+        }     
+
+        //get word of day based on dictionary in wordOfDay.js
+        let wordOfDay = dictionary[randomIndex];
         let query = url + wordOfDay + key;
 
         $.ajax({
@@ -52,7 +66,6 @@ $(document).ready(function(e){
             
             }).then(function(data){
 
-                console.log(data);
                 $(".word").html(wordOfDay);
             
                 let jQuery = [".wordOne", ".wordTwo", ".wordThree"];
@@ -66,8 +79,7 @@ $(document).ready(function(e){
                     for( let j = 0; j < definition.length; j++){
                         $(".wordul" + i).append("<li>" + definition[j] + "</li>");
                     }
-                }
-                
+                } 
             });
     }
 });
