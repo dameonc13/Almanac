@@ -3,7 +3,7 @@ $(document).ready(function(e){
     /*
     * Today's date
     */
-    var today = moment().format("M/D");
+    let today = moment().format("M/D");
     
     onThisDay();
     wordOfTheDay();
@@ -13,18 +13,18 @@ $(document).ready(function(e){
     * Finds a fun historical event from this day and populates a tile.
     */
     function onThisDay(){
-        let url = "https://byabbe.se/on-this-day/";
-        let date = moment().format("M/D");
-        let query = url + date + "/events.json";
+        let url = "https://byabbe.se/on-this-day/",
+            query = url + today + "/events.json";
 
         $.ajax({
             url: query,
             method: "GET"
+
             }).then(function(data) {
                 
                 //holds index for api object
                 let index = Math.floor(Math.random() * data.events.length);
-                
+
                 //add to html
                 $(".onThisDayTitle").html(data.date + ", " + data.events[index].year);
                 $(".onThisDaySubtitle").html(data.events[index].description);
@@ -34,20 +34,20 @@ $(document).ready(function(e){
     }
 
     /*
-    * Determines random word of the day and outputs definition & part of speech (adj, noun, etc).
+    * Determines random word of the day and outputs definition(s) & part(s) of speech (adj, noun, etc).
     */
     function wordOfTheDay(){
-        let key = "?key=64670138-b960-4366-9959-b8fdc5ecef9e";
-        let url = "https://dictionaryapi.com/api/v3/references/collegiate/json/";
+        let key = "?key=64670138-b960-4366-9959-b8fdc5ecef9e",
+            url = "https://dictionaryapi.com/api/v3/references/collegiate/json/";
 
         //get the saved randomIndex
         let randomIndex = localStorage.getItem("wordIndex");
 
-        //if no date stored in local storage, or if it is a new day: set today in local storage & generate new random number and save to local storage
+        //if no date stored in localStorage, or if it is a new day...
         if((localStorage.getItem("today") == null) || (localStorage.getItem("today") != today)){
-            localStorage.setItem("today", today);
-            randomIndex = Math.floor((Math.random() * dictionary.length) + 1);
-            localStorage.setItem("wordIndex", randomIndex);
+            localStorage.setItem("today", today); //... Then, set today in localStorage...
+            randomIndex = Math.floor((Math.random() * dictionary.length) + 1); //... Next, calculate new number...
+            localStorage.setItem("wordIndex", randomIndex); //... Finally, save index into localStorage.
         }
 
         //if index is null, generate new random number and save to local storage
@@ -58,6 +58,8 @@ $(document).ready(function(e){
 
         //get word of day based on dictionary in wordOfDay.js
         let wordOfDay = dictionary[randomIndex];
+
+        //build query
         let query = url + wordOfDay + key;
 
         $.ajax({
