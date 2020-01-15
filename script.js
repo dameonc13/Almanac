@@ -40,6 +40,7 @@ $(document).ready(function(e){
         let key = "?key=64670138-b960-4366-9959-b8fdc5ecef9e";
         let url = "https://dictionaryapi.com/api/v3/references/collegiate/json/";
 
+        //get the saved randomIndex
         let randomIndex = localStorage.getItem("wordIndex");
 
         //if first load, set today in local storage, else: if it is a new day, generate new random number and save to local storage
@@ -50,6 +51,7 @@ $(document).ready(function(e){
             randomIndex = Math.floor((Math.random() * dictionary.length) + 1);
             localStorage.setItem("wordIndex", randomIndex);
         }
+
         //if number is null, generate new random number and save to local storage
         if(randomIndex === null){
             randomIndex = Math.floor((Math.random() * dictionary.length) + 1);
@@ -68,18 +70,21 @@ $(document).ready(function(e){
 
                 $(".word").html(wordOfDay);
             
+                //3 words, saved class names for easier calling later
                 let jQuery = [".wordOne", ".wordTwo", ".wordThree"];
 
+                //get the first three definitions of a word, if less than three defs for a word: STOP!
                 for (let i = 0; i < data.length && i < 3; i ++){
                     
                     let definition = data[i].shortdef;
                     let partOfSpeech = data[i].fl;
 
+                    //update HTML with word, definition, & part of speech
                     $(jQuery[i]).append(partOfSpeech + "<ul class=\"wordul" + i + "\">");
                     for( let j = 0; j < definition.length; j++){
                         $(".wordul" + i).append("<li>" + definition[j] + "</li>");
                     }
                 } 
             });
-    }
+    } 
 });
