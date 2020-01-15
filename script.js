@@ -59,14 +59,14 @@ $(document).ready(function (e) {
 
     //  create onclick button to call search function 
     $(".weather-btn").on("click", function (event) {
-        let alertElement = $(".weather-notification");
-        let weatherIcon = $(".weather-icon");
-        let tempValue = $(".temperature-value");
-        let tempDescription = $(".temperature-description");
-        let locationElement = $(".weather-location");
-        let dateElemenet = $(".date");
-        let cityElement = $("#weather-city");
-        let btnElement = $(".weather-btn");
+        // let alertElement = $(".weather-notification");
+        // let weatherIcon = $(".weather-icon");
+        // let tempValue = $(".temperature-value");
+        // let tempDescription = $(".temperature-description");
+        // let locationElement = $(".weather-location");
+        // let dateElemenet = $(".date");
+        // let cityElement = $("#weather-city");
+        // let btnElement = $(".weather-btn");
         let citySearch = "";
     
         // //create current date using moment.js 
@@ -95,13 +95,9 @@ $(document).ready(function (e) {
                 localStorage.setItem("icon", data.weather[0].icon);
                 localStorage.setItem("city", data.name);
                 localStorage.setItem("country", data.sys.country);
-
-                
  
                 //display weather data result from storage to HTML page when called 
-
-                
-                $(".weather-location").html("cityElement" + data.name);
+                $(".weather-location").html(data.name);
                 $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
                 $(".temperature-description").text(data.weather[0].description);
                 $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
@@ -111,6 +107,7 @@ $(document).ready(function (e) {
             });
            
     });
+    //create function to display stored weather data when page is open 
     function currentWeatherForecast() {
         let storedTemp = localStorage.getItem("temperature");
         let storedWeather = localStorage.getItem("cityElement");
@@ -125,7 +122,11 @@ $(document).ready(function (e) {
         $("#weather-city").text(storedLocation);
 
     }
-    
+    //create function to get current weather geolocation 
+       navigator.geolocation.getCurrentPosition(function(position){
+           console.log(position)
+       })
+    //    
 });
 
 
