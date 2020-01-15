@@ -61,17 +61,18 @@ $(document).ready(function(e){
 //p=pauls playground
 
 function news(){
- // This is our API key
- var APIKey = "Aw4YgVC7dO9qpiArPu0fvwznQjb15ut7";
+ // API key
+ var APIKey = "04tZhurBbLgKFaSyXTxazdlLROXnJO38";
+ var todayDate = moment().format();
 
- // Here we are building the URL we need to query the database
- var queryURL = "https://api.nytimes.com/svc/topstories/v2/home.json?api-key=" + APIKey;
+ // url to query
+ var queryURL = "https://api.nytimes.com/svc/news/v3/content/all/all.json?api-key=" + APIKey;
 
  var articles = [
    {
      title: "",
-     url: ""
-   },
+     url: "",
+  },
    {
      title: "",
      url: ""
@@ -91,7 +92,7 @@ function news(){
  ];
 
  
- // Here we run our AJAX call to the OpenWeatherMap API
+ // Here we run our AJAX call to the NYTimes API
  $.ajax({
    url: queryURL,
    method: "GET"
@@ -104,48 +105,29 @@ function news(){
 
      // Log the resulting object
      console.log(response)
-     //articles[0].title = response.results[0].title;
-     //articles[0].url = response.results[0].url;
-     //article[1].title = response.results[1].title;
-     //article[1].url = response.results[1].url;
-     //article[2].title = respone.results[2].title;
-     //articles[2].url = response.results[2].url;
-
+     console.log(todayDate);
+    
      for (i=0; i < articles.length; i ++){
        articles[i].title = response.results[i].title;
        articles[i].url = response.results[i].url;
-        console.log(articles[i]);
+        console.log(articles[i].url);
      }
 
-     $(".newstitle1").text(articles[0].title);
-     $(".newsurl1").text(articles[0].url);
+     $(".newstitle1").html(articles[0].title);
+     $("#newsbtn1").html('<a href=" '+ articles[0].url +'" target="_blank">link</a>');
      $(".newstitle2").text(articles[1].title);
-     $(".newsurl2").text(articles[1].url);
+     $("#newsbtn2").html('<a href=" '+ articles[0].url +'">link</a>');
      $(".newstitle3").text(articles[2].title);
-     $(".newsurl3").text(articles[2].url);
+     $("#newsbtn3").html('<a href=" '+ articles[0].url +'">link</a>');
      $(".newstitle4").text(articles[3].title);
-     $(".newsurl4").text(articles[3].url);
+     $("#newsbtn4").html('<a href=" '+ articles[0].url +'">link</a>');
      $(".newstitle5").text(articles[4].title);
-     $(".newsurl5").text(articles[4].url);
+     $("#newsbtn5").html('<a href=" '+ articles[0].url +'">link</a>');
      
 
      
 
-     // Transfer content to HTML
-     //$(".first").text(response.results[1]);
-     //$(".wind").text("Wind Speed: " + response.wind.speed);
-     //$(".humidity").text("Humidity: " + response.main.humidity);
-     //$(".temp").text("Temperature (F) " + response.main.temp);
-
-     // Converts the temp to Kelvin with the below formula
-    // var tempF = (response.main.temp - 273.15) * 1.80 + 32;
-     //$(".tempF").text("Temperature (Kelvin) " + tempF);
-
-     // Log the data in the console as well
-     //console.log(response.results[0]);
-     //console.log(JSON.stringify(response.results[2]));
-     //console.log("Temperature (F): " + response.main.temp);
-   });
+     });
 }
 
 
