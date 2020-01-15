@@ -1,3 +1,7 @@
+/*
+* Dictionary used to query the api for qord of the day.
+* Each day, a number is chosen at random indicating the index of this array.
+*/
 var dictionary = [
     "aachen",
     "aardvark",
