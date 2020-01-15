@@ -23,8 +23,8 @@ $(document).ready(function(e){
             }).then(function(data) {
                 
                 //holds index for api object
-                let index = Math.round(Math.random() * data.events.length);
-
+                let index = Math.floor(Math.random() * data.events.length);
+                
                 //add to html
                 $(".onThisDayTitle").html(data.date + ", " + data.events[index].year);
                 $(".onThisDaySubtitle").html(data.events[index].description);
