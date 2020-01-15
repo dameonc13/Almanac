@@ -68,7 +68,7 @@ $(document).ready(function(e){
             
             }).then(function(data){
 
-                $(".word").html(wordOfDay);
+                $(".word").html(toUpper(wordOfDay));
             
                 //3 definitions, saved class names for easier calling later
                 let jQuery = [".wordOne", ".wordTwo", ".wordThree"];
@@ -82,9 +82,18 @@ $(document).ready(function(e){
                     //update HTML with word, definition, & part of speech
                     $(jQuery[i]).append(partOfSpeech + "<ul class=\"wordul" + i + "\">");
                     for( let j = 0; j < definition.length; j++){
-                        $(".wordul" + i).append("<li>" + definition[j] + "</li>");
+                        $(".wordul" + i).append("<li>" + toUpper(definition[j]) + "</li>");
                     }
                 } 
             });
-    } 
+    }
+    
+    /*
+    * Takes a string argument and returns the same string with first letter capitalized.
+    * Small helper function used for printing word of day and definition onto screen.
+    */
+    function toUpper(input){
+        let newString = input.charAt(0).toUpperCase() + input.substring(1);
+        return newString;
+    }
 });
