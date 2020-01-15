@@ -76,13 +76,13 @@ $(document).ready(function(e){
                 //get the first three definitions of a word, if less than three defs for a word: STOP!
                 for (let i = 0; i < data.length && i < 3; i ++){
                     
-                    let definition = data[i].shortdef;
-                    let partOfSpeech = data[i].fl;
+                    let definition = data[i].shortdef,
+                        partOfSpeech = data[i].fl;
 
                     //update HTML with word, definition, & part of speech
-                    $(jQuery[i]).append(partOfSpeech + "<ul class=\"wordul" + i + "\">");
-                    for( let j = 0; j < definition.length; j++){
-                        $(".wordul" + i).append("<li>" + toUpper(definition[j]) + "</li>");
+                    $(jQuery[i]).append(partOfSpeech + "<ul class=\"wordUL" + i + "\">");
+                    for (let j = 0; j < definition.length; j++){
+                        $(".wordUL" + i).append("<li>" + toUpper(definition[j]) + "</li>");
                     }
                 } 
             });
@@ -96,4 +96,5 @@ $(document).ready(function(e){
         let newString = input.charAt(0).toUpperCase() + input.substring(1);
         return newString;
     }
+
 });
