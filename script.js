@@ -80,7 +80,7 @@ $(document).ready(function(e){
                         partOfSpeech = data[i].fl;
 
                     //update HTML with word, definition, & part of speech
-                    $(jQuery[i]).append(partOfSpeech + "<ul class=\"wordUL" + i + "\">");
+                    $(jQuery[i]).append("<p style=\"font-style: italic;\">" + partOfSpeech + "<ul class=\"wordUL" + i + "\" >");
                     for (let j = 0; j < definition.length; j++){
                         $(".wordUL" + i).append("<li>" + toUpper(definition[j]) + "</li>");
                     }
@@ -96,5 +96,4 @@ $(document).ready(function(e){
         let newString = input.charAt(0).toUpperCase() + input.substring(1);
         return newString;
     }
-
 });
