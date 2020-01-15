@@ -5,8 +5,9 @@ $(document).ready(function (e) {
     */
     var today = moment().format("M/D");
 
-    // onThisDay();
-
+    //onThisDay();
+    currentWeatherForecast();
+    
     /*
     * On this Day in History
     * Finds a fun historical event from this day and populates a tile.
@@ -53,27 +54,29 @@ $(document).ready(function (e) {
         });
     }
 
-
-    let alertElement = $(".weather-notification");
-    let weatherIcon = $(".weather-icon");
-    let tempValue = $(".temperature-value");
-    let tempDescription = $(".temperature-description");
-    let locationElement = $(".weather-location");
-    let dateElemenet = $(".date");
-    let cityElement = $("#weather-city");
-    let btnElement = $(".weather-btn");
-    let citySearch = "";
-
-    // //create current date using moment.js 
-    var d = moment().format('LLLL');
-    $(".date").append(d);
-    console.log(d);
-
-    //create api key and url links 
-    let APIkey = "e1014510ebbf942b1f1d07d44fa4f59b";
+    
+    
 
     //  create onclick button to call search function 
     $(".weather-btn").on("click", function (event) {
+        let alertElement = $(".weather-notification");
+        let weatherIcon = $(".weather-icon");
+        let tempValue = $(".temperature-value");
+        let tempDescription = $(".temperature-description");
+        let locationElement = $(".weather-location");
+        let dateElemenet = $(".date");
+        let cityElement = $("#weather-city");
+        let btnElement = $(".weather-btn");
+        let citySearch = "";
+    
+        // //create current date using moment.js 
+        var d = moment().format('LLLL');
+        $(".date").append(d);
+        console.log(d);
+    
+        //create api key and url links 
+        let APIkey = "e1014510ebbf942b1f1d07d44fa4f59b";
+
         event.preventDefault();
 
         //this variable collects the user infomation from the text area
@@ -83,46 +86,47 @@ $(document).ready(function (e) {
         $.ajax({
             url: queryURL,
             method: "GET"
-        })
-
-            .then(function (data) {
+        }).then(function (data) {
                 console.log(data);
-                //set weather data to local storage 
+                // set weather data to local storage 
                 localStorage.setItem("cityElement", citySearch);
-                localStorage.setItem("temperature", data.main.temp + "" + "º" + "F");
-                // localStorage.setItem("min-temperature", data.main.temp_min);
-                // localStorage.setItem("unit");
+                localStorage.setItem("temperature", Math.round(data.main.temp) + "" + "º" + "F");
                 localStorage.setItem("description", data.weather[0].description);
                 localStorage.setItem("icon", data.weather[0].icon);
                 localStorage.setItem("city", data.name);
                 localStorage.setItem("country", data.sys.country);
 
+                
+ 
+                //display weather data result from storage to HTML page when called 
 
+                
+                $(".weather-location").html("cityElement" + data.name);
+                $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
+                $(".temperature-description").text(data.weather[0].description);
+                $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
+                
+
+                
             });
-//display weather data result from storage to HTML page when called 
+           
+    });
+    function currentWeatherForecast() {
+        let storedTemp = localStorage.getItem("temperature");
+        let storedWeather = localStorage.getItem("cityElement");
+        let storedDecrip = localStorage.getItem("description");
+        let storedIcon = localStorage.getItem("icon");
+        let storedLocation = localStorage.getItem("city");
 
-   var storedWeather = localStorage.getItem("cityElement");
-    cityElement.text(storedWeather); 
-    console.log(storedWeather);
+        $(".temperature-value").text(storedTemp);
+        $(".weather-location").text(storedWeather);
+        $(".temperature-description").text(storedDecrip);
+        $(".weather-icon").html("<img src=\"./Asset/" + storedIcon + ".png\" alt=\"" + storedIcon + "\"></img>");
+        $("#weather-city").text(storedLocation);
 
-    var storedTemp = localStorage.getItem("temperature");
-    tempValue.text(storedTemp);
-
-    var storedDecrip = localStorage.getItem("description");
-    tempDescription.text(storedDecrip);
-console.log(storedDecrip);
-    var storedIcon = localStorage.getItem("icon");
-    weatherIcon.text(storedIcon);
-
-    var storedLocation = localStorage.getItem("city");
-    locationElement.text(storedLocation);
-  
+    }
     
-    
-   
-
-    })
-})
+});
 
 
 
