@@ -5,7 +5,7 @@ $(document).ready(function(e){
     */
     var today = moment().format("M/D");
     
-    //onThisDay();
+    onThisDay();
     wordOfTheDay();
 
     /*
@@ -29,23 +29,17 @@ $(document).ready(function(e){
             },
         }
 
-        console.log(query);
-
         $.ajax({
             url: query,
             method: "GET"
             }).then(function(data) {
-                console.log(data);
                 let index = Math.round(Math.random() * data.events.length);
-                console.log("random: " + index);
 
                 fact.date = data.date;
                 fact.year = data.events[index].year;
                 fact.description = data.events[index].description;
                 fact.wikipedia.title = data.events[index].wikipedia[0].title;
                 fact.wikipedia.link = data.events[index].wikipedia[0].wikipedia;
-
-                console.log("fact: " + fact);
 
                 $(".onThisDayTitle").html(fact.date + ", " + fact.year);
                 $(".onThisDaySubtitle").html(fact.description);
@@ -60,51 +54,32 @@ $(document).ready(function(e){
     function wordOfTheDay(){
         let key = "?key=64670138-b960-4366-9959-b8fdc5ecef9e";
         let url = "https://dictionaryapi.com/api/v3/references/collegiate/json/";
-        let wordOfDay = "school";
+        let wordOfDay = "School";
         let query = url + wordOfDay + key;
-
-        //object which stores each word
-        let word = {
-            title: "",
-            definition: [],
-            partOfSpeech: "",
-        }
-        
-        //create new word instances
-        wordOne = Object.assign(word);
-        wordTwo = Object.assign(word);
-        wordThree = Object.assign(word);
-
-        //array of words, to house word objects (as defined above)
-        //house up to three objects?
-        let wordArray = [];
 
         $.ajax({
             url: query,
             method: "GET"
             
             }).then(function(data){
+
+                console.log(data);
+            
+                let jQuery = [".wordOne", ".wordTwo", ".wordThree"];
+
+                for (let i = 0; i < data.length && i < 3; i ++){
+                    console.log("i = " + i);
+                    
+                    let definition = data[i].shortdef;
+                    let partOfSpeech = data[i].fl;
+
+                    $(jQuery[i]).append(partOfSpeech + "<ul class=\"wordul" + i + "\">");
+                    for( let j = 0; j < definition.length; j++){
+                        $(".wordul" + i).append("<li>" + definition[j] + "</li>");
+                        console.log("j = " + j);
+                    }
+                }
                 
-                //assign values in words
-                wordOne.title = wordOfDay;
-                wordOne.definition = data[0].shortdef;
-                wordOne.partOfSpeech = data[0].fl;
-
-                wordTwo.title = wordOfDay;
-                wordTwo.definition = data[1].shortdef;
-                wordTwo.partOfSpeech = data[1].fl;
-
-                wordThree.title = wordOfDay;
-                wordThree.definition = data[2].shortdef;
-                wordThree.partOfSpeech = data[2].fl;
-                
-                //push to word array
-                wordArray.push(wordOne);
-                wordArray.push(wordTwo);
-                wordArray.push(wordThree);
-
-                console.log(wordArray);
             });
-        
     }
 });
