@@ -1,7 +1,7 @@
 $(document).ready(function(e){
 
     /*
-    * today's date
+    * Today's date
     */
     var today = moment().format("M/D");
     
@@ -34,7 +34,7 @@ $(document).ready(function(e){
     }
 
     /*
-    * Determines random word of the day and outputs definition, etc
+    * Determines random word of the day and outputs definition & part of speech (adj, noun, etc).
     */
     function wordOfTheDay(){
         let key = "?key=64670138-b960-4366-9959-b8fdc5ecef9e";
@@ -43,16 +43,14 @@ $(document).ready(function(e){
         //get the saved randomIndex
         let randomIndex = localStorage.getItem("wordIndex");
 
-        //if first load, set today in local storage, else: if it is a new day, generate new random number and save to local storage
-        if(localStorage.getItem("today") == null){
-            localStorage.setItem("today", today);
-        }else if(localStorage.getItem("today") != today){
+        //if no date stored in local storage, or if it is a new day: set today in local storage & generate new random number and save to local storage
+        if((localStorage.getItem("today") == null) || (localStorage.getItem("today") != today)){
             localStorage.setItem("today", today);
             randomIndex = Math.floor((Math.random() * dictionary.length) + 1);
             localStorage.setItem("wordIndex", randomIndex);
         }
 
-        //if number is null, generate new random number and save to local storage
+        //if index is null, generate new random number and save to local storage
         if(randomIndex === null){
             randomIndex = Math.floor((Math.random() * dictionary.length) + 1);
             localStorage.setItem("wordIndex", randomIndex);
@@ -70,7 +68,7 @@ $(document).ready(function(e){
 
                 $(".word").html(wordOfDay);
             
-                //3 words, saved class names for easier calling later
+                //3 definitions, saved class names for easier calling later
                 let jQuery = [".wordOne", ".wordTwo", ".wordThree"];
 
                 //get the first three definitions of a word, if less than three defs for a word: STOP!
