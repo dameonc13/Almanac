@@ -62,11 +62,11 @@ $(document).ready(function(e){
 
 function news(){
  // API key
- var APIKey = "04tZhurBbLgKFaSyXTxazdlLROXnJO38";
- var todayDate = moment().format();
+ var APIKey = "8cbd36d7b28e470b90b2709797dceca2";
+ //var todayDate = moment().format();
 
  // url to query
- var queryURL = "https://api.nytimes.com/svc/news/v3/content/all/all.json?api-key=" + APIKey;
+ var queryURL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=' + APIKey;
 
  var articles = [
    {
@@ -105,24 +105,24 @@ function news(){
 
      // Log the resulting object
      console.log(response)
-     console.log(todayDate);
+     //console.log(todayDate);
     
      for (i=0; i < articles.length; i ++){
-       articles[i].title = response.results[i].title;
-       articles[i].url = response.results[i].url;
+       articles[i].title = response.articles[i].title;
+       articles[i].url = response.articles[i].url;
         console.log(articles[i].url);
      }
 
      $(".newstitle1").html(articles[0].title);
-     $("#newsbtn1").html('<a href=" '+ articles[0].url +'" target="_blank">link</a>');
+     $("#newslink1").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
      $(".newstitle2").text(articles[1].title);
-     $("#newsbtn2").html('<a href=" '+ articles[0].url +'">link</a>');
+     $("#newslink2").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
      $(".newstitle3").text(articles[2].title);
-     $("#newsbtn3").html('<a href=" '+ articles[0].url +'">link</a>');
+     $("#newslink3").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
      $(".newstitle4").text(articles[3].title);
-     $("#newsbtn4").html('<a href=" '+ articles[0].url +'">link</a>');
+     $("#newslink4").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
      $(".newstitle5").text(articles[4].title);
-     $("#newsbtn5").html('<a href=" '+ articles[0].url +'">link</a>');
+     $("#newslink5").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
      
 
      
