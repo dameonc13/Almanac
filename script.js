@@ -116,13 +116,13 @@ function news(){
      $(".newstitle1").html(articles[0].title);
      $("#newslink1").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
      $(".newstitle2").text(articles[1].title);
-     $("#newslink2").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
+     $("#newslink2").html('<a href=" '+ articles[1].url +'" target="_blank">Read Article</a>');
      $(".newstitle3").text(articles[2].title);
-     $("#newslink3").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
+     $("#newslink3").html('<a href=" '+ articles[2].url +'" target="_blank">Read Article</a>');
      $(".newstitle4").text(articles[3].title);
-     $("#newslink4").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
+     $("#newslink4").html('<a href=" '+ articles[3].url +'" target="_blank">Read Article</a>');
      $(".newstitle5").text(articles[4].title);
-     $("#newslink5").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
+     $("#newslink5").html('<a href=" '+ articles[4].url +'" target="_blank">Read Article</a>');
      
 
      
