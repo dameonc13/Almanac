@@ -7,7 +7,7 @@ $(document).ready(function (e) {
 
     //onThisDay();
     currentWeatherForecast();
-    
+
     /*
     * On this Day in History
     * Finds a fun historical event from this day and populates a tile.
@@ -54,8 +54,8 @@ $(document).ready(function (e) {
         });
     }
 
-    
-    
+
+
 
     //  create onclick button to call search function 
     $(".weather-btn").on("click", function (event) {
@@ -68,12 +68,12 @@ $(document).ready(function (e) {
         // let cityElement = $("#weather-city");
         // let btnElement = $(".weather-btn");
         let citySearch = "";
-    
+
         // //create current date using moment.js 
         var d = moment().format('LLLL');
         $(".date").append(d);
         console.log(d);
-    
+
         //create api key and url links 
         let APIkey = "e1014510ebbf942b1f1d07d44fa4f59b";
 
@@ -87,25 +87,25 @@ $(document).ready(function (e) {
             url: queryURL,
             method: "GET"
         }).then(function (data) {
-                console.log(data);
-                // set weather data to local storage 
-                localStorage.setItem("cityElement", citySearch);
-                localStorage.setItem("temperature", Math.round(data.main.temp) + "" + "º" + "F");
-                localStorage.setItem("description", data.weather[0].description);
-                localStorage.setItem("icon", data.weather[0].icon);
-                localStorage.setItem("city", data.name);
-                localStorage.setItem("country", data.sys.country);
- 
-                //display weather data result from storage to HTML page when called 
-                $(".weather-location").html(data.name);
-                $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
-                $(".temperature-description").text(data.weather[0].description);
-                $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
-                
-
-                
-            });
+            console.log(data);
+            // set weather data to local storage 
+            localStorage.setItem("cityElement", citySearch);
+            localStorage.setItem("temperature", Math.round(data.main.temp) + "" + "º" + "F");
+            localStorage.setItem("description", data.weather[0].description);
+            localStorage.setItem("icon", data.weather[0].icon);
+            localStorage.setItem("city", data.name);
            
+
+            //display weather data result from storage to HTML page when called 
+            $(".weather-location").html(data.name);
+            $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
+            $(".temperature-description").text(data.weather[0].description);
+            $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
+
+
+
+        });
+
     });
     //create function to display stored weather data when page is open 
     function currentWeatherForecast() {
@@ -121,12 +121,41 @@ $(document).ready(function (e) {
         $(".weather-icon").html("<img src=\"./Asset/" + storedIcon + ".png\" alt=\"" + storedIcon + "\"></img>");
         $("#weather-city").text(storedLocation);
 
+
+
     }
-    //create function to get current weather geolocation 
-       navigator.geolocation.getCurrentPosition(function(position){
-           console.log(position)
-       })
-    //    
+
+    //create function to get current geolocation availability 
+    navigator.geolocation.getCurrentPosition(function (position) {
+        console.log(position)
+        
+    })
+   
+     //create function for latitude and longitude coordition
+     function setPosition(position) {
+        let latidude = position.coords.latitude;
+        let longitude = position.coords.longitude;
+        console.log(latidude); 
+        console.log(longitude);
+        setPosition();
+    }
+    
+    
+    // getWeather(latidude, longitude);
+  
+    // function getWeatherPosition(latitude, longitude) {
+    //     let weatherApi = "api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=" + "e1014510ebbf942b1f1d07d44fa4f59b";
+    //     $.ajax({
+    //         url: weatherApi,
+    //         method: "GET"
+    //     }).then(function (wData) {
+    //         console.log(wData);
+    //     })
+
+    // }
+
+
+
 });
 
 

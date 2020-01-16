@@ -1,8 +1,10 @@
-.subtitle1 {
-  display:inline-block;
+#container1 {
   text-align: center;
   color: #ffffff;
-  background-color: #4eb5f1;
+  font-family: fantasy;
+  font-weight: bold;
+  font-style: oblique;
+  /* background-color: beige; */
 
 /*   padding:0.3em 1.2em;
  margin:0 0.3em 0.3em 0;
@@ -14,4 +16,8 @@
  
  
  transition: all 0.2s; */
+}
+label {
+  font-family: fantasy;
+  font-style: oblique;
 }

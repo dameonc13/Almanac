@@ -20,23 +20,26 @@
           <div class="tile">
             <div class="tile is-parent is-vertical">
               <article class="tile is-child notification is-primary">
-                <p class="title">Weather</p>
+                <div id="container1">
+                <!-- <p class="title">Weather</p> -->
                 <h1 class="subtitle">Daily Weather Forecast</h1>
-                <div class="date"></div>
+                <div class="date"></div> <br>
+                <div class="weather-location"></div>
                 <div class="weather-notification"></div>
-                <div class="weather container">
                   <div class="weather-icon"></div>
-                  <div class="temperature-value"><p>º<span></span>F</p></div>
-                  <div class="temperature-description"><p> - </p></div>
-                  <div class="weather-location"><p> - </p></div>
+                  <div class="temperature-description"></div>
+                  <div class="temperature-value"></div>
+                  
+                  
                 </div>
                 <div class="form-group">
-                  <label for="search">City:</label>
-                  <input type="text" class="form-control" id="weather-city">
+                  <label for="search">Get Weather:</label>
+                  <input type="text" class="form-control" id="weather-city" placeholder="City Name">
                   <button class="weather-btn">
                     <span class="spinner-border spinner-border-sm">Click</span>
                   </button>
                 </div>
+              </div>
               </article>
               <!-- on this day -->
               <article class="tile is-child notification is-warning onThisDayTile">
