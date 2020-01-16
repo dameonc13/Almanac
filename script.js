@@ -103,7 +103,7 @@ $(document).ready(function (e) {
             $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
             $(".temperature-description").text(data.weather[0].description);
             $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
-            $(".humidity").text(data.main.humidity + " %");
+            $(".humidity").text("Humidity: " + data.main.humidity + " %");
 
 
 
@@ -152,7 +152,7 @@ $(document).ready(function (e) {
             $(".temperature-value").text(Math.round(wData.list[0].main.temp) + "º" + "F");
             $(".temperature-description").text(wData.list[0].weather[0].description);
             $(".weather-icon").html("<img src=\"./Asset/" + wData.list[0].weather[0].icon + ".png\" alt=\"" + wData.list[0].weather[0].icon + "\"></img>");
-            $(".humidity").text(wData.list[0].main.humidity + " %");
+            $(".humidity").text("Humidity: " + wData.list[0].main.humidity + " %");
 
         })
         
