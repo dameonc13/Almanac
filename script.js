@@ -6,7 +6,8 @@ $(document).ready(function (e) {
     var today = moment().format("M/D");
 
     //onThisDay();
-    currentWeatherForecast();
+    weatherGeoLocation();
+    // currentWeatherForecast();
 
     /*
     * On this Day in History
@@ -94,32 +95,36 @@ $(document).ready(function (e) {
             localStorage.setItem("description", data.weather[0].description);
             localStorage.setItem("icon", data.weather[0].icon);
             localStorage.setItem("city", data.name);
-           
+            localStorage.setItem("humidity", data.main.humidity + " %");
+
 
             //display weather data result from storage to HTML page when called 
             $(".weather-location").html(data.name);
             $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
             $(".temperature-description").text(data.weather[0].description);
             $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
+            $(".humidity").text(data.main.humidity + " %");
 
 
 
         });
 
     });
-    //create function to display stored weather data when page is open 
+    // create function to display stored weather data when page is open 
     function currentWeatherForecast() {
         let storedTemp = localStorage.getItem("temperature");
         let storedWeather = localStorage.getItem("cityElement");
         let storedDecrip = localStorage.getItem("description");
         let storedIcon = localStorage.getItem("icon");
         let storedLocation = localStorage.getItem("city");
+        let storedHumid = localStorage.getItem("humidity");
 
         $(".temperature-value").text(storedTemp);
         $(".weather-location").text(storedWeather);
         $(".temperature-description").text(storedDecrip);
         $(".weather-icon").html("<img src=\"./Asset/" + storedIcon + ".png\" alt=\"" + storedIcon + "\"></img>");
         $("#weather-city").text(storedLocation);
+        $(".humidity").text(storedHumid);
 
 
 
@@ -128,33 +133,31 @@ $(document).ready(function (e) {
     //create function to get current geolocation availability 
     navigator.geolocation.getCurrentPosition(function (position) {
         console.log(position)
-        
+        console.log("latidude = " + position.coords.latitude);
+        console.log("longitude= " + position.coords.longitude);
     })
-   
-     //create function for latitude and longitude coordition
-     function setPosition(position) {
-        let latidude = position.coords.latitude;
-        let longitude = position.coords.longitude;
-        console.log(latidude); 
-        console.log(longitude);
-        setPosition();
+
+    //show weather info based on geolocation 
+    function weatherGeoLocation() {
+        let weatherApi = "https://api.openweathermap.org/data/2.5/forecast?lat=41.4872014&lon=-73.0178592" + "&units=imperial&appid=" + "e1014510ebbf942b1f1d07d44fa4f59b";
+        $.ajax({
+            url: weatherApi,
+            method: "GET"
+        }).then(function (wData) {
+            console.log(wData);
+            console.log(wData.list[0]);
+            console.log(wData.city.name)
+
+            $(".weather-location").text(wData.city.name);
+            $(".temperature-value").text(Math.round(wData.list[0].main.temp) + "º" + "F");
+            $(".temperature-description").text(wData.list[0].weather[0].description);
+            $(".weather-icon").html("<img src=\"./Asset/" + wData.list[0].weather[0].icon + ".png\" alt=\"" + wData.list[0].weather[0].icon + "\"></img>");
+            $(".humidity").text(wData.list[0].main.humidity + " %");
+
+        })
+        
+
     }
-    
-    
-    // getWeather(latidude, longitude);
-  
-    // function getWeatherPosition(latitude, longitude) {
-    //     let weatherApi = "api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=" + "e1014510ebbf942b1f1d07d44fa4f59b";
-    //     $.ajax({
-    //         url: weatherApi,
-    //         method: "GET"
-    //     }).then(function (wData) {
-    //         console.log(wData);
-    //     })
-
-    // }
-
-
 
 });
 
