@@ -2,18 +2,15 @@ $(document).ready(function (e) {
 
     /*
     * Today's date in moment() format
+    * Used due to different functionality as opposed to Date()
     */
     var today = moment().format("M/D");
 
     /*
     * Today's date in Date() format
+    * Used due to different functionality as opposed to moment()
     */
     var todayDate = new Date();
-
-    /*
-    * Global array of strings, holds instances on each month
-    */
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     /*
     * Global instance of the current month as Date Object.
@@ -22,6 +19,7 @@ $(document).ready(function (e) {
     var currentMonth = todayDate.getMonth(),
         currentYear = todayDate.getFullYear();
 
+    //run all of the individual functions to set up the page at initial load.
     showCalendar(currentMonth, currentYear);
     onThisDay();
     news();
@@ -52,33 +50,32 @@ $(document).ready(function (e) {
         });
     }
 
+    /* 
+    * Get geolocation at load after permission granted for location access.
+    */
+    navigator.geolocation.getCurrentPosition(function (loc) {
+        let lat = loc.coords.latitude;
+        let lon = loc.coords.longitude;
+        weatherGeoLocation(lat, lon);
+    });
+
     /*
     * Listener which runs on click of weather button.
     * Gets weather for searched city.
     */
-    $(".weather-btn").on("click", function (event) {
+   $(".weather-btn").on("click", function (e) {
 
-        let citySearch = "";
-        let d = moment().format('LLLL');
+    let citySearch = "";
 
-        //Create api key and url links 
-        let APIkey = "e1014510ebbf942b1f1d07d44fa4f59b";
+    //Create api key and url links 
+    let APIkey = "e1014510ebbf942b1f1d07d44fa4f59b";
 
-        //Collect user infomation from text area of #weather-city
-        citySearch = $("#weather-city").val().trim()
+    //Collect user infomation from text area of #weather-city
+    citySearch = $("#weather-city").val().trim()
 
-        let query = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
-        weatherAjax(query);
-        
-    });
-
-    /* 
-    * Get geolocation at load after permission granted.
-    */
-    navigator.geolocation.getCurrentPosition(function (position) {
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
-        weatherGeoLocation(lat, lon);
+    let query = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
+    weatherAjax(query);
+    
     });
 
     /*
@@ -97,38 +94,36 @@ $(document).ready(function (e) {
 
     /*
     * Function which runs the ajax for the weather API call.
+    * After query is retured, populates html accordingly.
     * @arg: query: string which holds weather api query link.
     */
     function weatherAjax(query){
 
-        console.log(moment(today, 'LLLL'));
-        $(".date").text(moment(today, 'LLLL'));
+        let d = moment().format('LLLL');
+        $(".date").text(d);
 
         $.ajax({
             url: query,
             method: "GET"
         }).then(function (data) {
-            console.log(data);
 
             $(".weather-location").text(data.name);
             $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
             $(".temperature-description").text(data.weather[0].description);
-            $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
+            $(".weather-icon").html("<img src=\"./assets/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
             $(".humidity").text("Humidity: " + data.main.humidity + " %");
         });
     }
 
     /*
-    * Function to GET data from NewsAPI and display on the html page.
+    * Function to get data from News API and populate html.
     */
     function news() {
-        // API key
+
         let APIKey = "8cbd36d7b28e470b90b2709797dceca2";
 
-        // url to query API
         let queryURL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=' + APIKey;
 
-        // Here we run our AJAX call to the NewsAPI
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -151,26 +146,21 @@ $(document).ready(function (e) {
         let key = "?key=64670138-b960-4366-9959-b8fdc5ecef9e",
             url = "https://dictionaryapi.com/api/v3/references/collegiate/json/";
 
-        //get the saved randomIndex
         let randomIndex = localStorage.getItem("wordIndex");
 
-        //if no date stored in localStorage, or if it is a new day...
         if ((localStorage.getItem("today") == null) || (localStorage.getItem("today") != today)) {
             localStorage.setItem("today", today); //... Then, set today in localStorage...
             randomIndex = Math.floor((Math.random() * dictionary.length) + 1); //... Next, calculate new number...
             localStorage.setItem("wordIndex", randomIndex); //... Finally, save index into localStorage.
         }
 
-        //if index is null, generate new random number and save to local storage
         if (randomIndex === null) {
             randomIndex = Math.floor((Math.random() * dictionary.length) + 1);
             localStorage.setItem("wordIndex", randomIndex);
         }
 
-        //get word of day based on dictionary in wordOfDay.js
         let wordOfDay = dictionary[randomIndex];
 
-        //build query
         let query = url + wordOfDay + key;
 
         $.ajax({
@@ -181,16 +171,13 @@ $(document).ready(function (e) {
 
             $(".word").html(toUpper(wordOfDay));
 
-            //3 definitions, saved class names for easier calling later
             let jQuery = [".wordOne", ".wordTwo", ".wordThree"];
 
-            //get the first three definitions of a word, if less than three defs for a word: STOP!
             for (let i = 0; i < data.length && i < 3; i++) {
 
                 let definition = data[i].shortdef,
                     partOfSpeech = data[i].fl;
 
-                //update HTML with word, definition, & part of speech
                 $(jQuery[i]).append("<p style=\"font-style: italic;\">" + partOfSpeech + "<ul class=\"wordUL" + i + "\" >");
                 for (let j = 0; j < definition.length; j++) {
                     $(".wordUL" + i).append("<li>" + toUpper(definition[j]) + "</li>");
@@ -199,7 +186,7 @@ $(document).ready(function (e) {
         });
     }
 
-    function next() {
+    $("#next").click(function(e) {
         $("#calendar-body").empty()
         if (currentMonth === 11) {
             currentYear = currentYear + 1
@@ -210,9 +197,9 @@ $(document).ready(function (e) {
         }
         currentMonth = (currentMonth + 1) % 12;
         showCalendar(currentMonth, currentYear);
-    }
+    });
 
-    function previous() {
+    $("#previous").click(function(e) {
         $("#calendar-body").empty()
 
         if (currentMonth === 0) {
@@ -228,21 +215,26 @@ $(document).ready(function (e) {
             currentMonth = currentMonth - 1;
         }
         showCalendar(currentMonth, currentYear);
-    }
+    });
 
-    function jump() {
+    $(".jump").on("change", function (event) {
         $("#calendar-body").empty()
         currentYear = parseInt(selectYear.value);
         currentMonth = parseInt(selectMonth.value);
         showCalendar(currentMonth, currentYear);
-    }
+    });
 
+    /*
+    * Function which creates the calendar and displays it on screen
+    * @arg: string: month in the year.
+    * @arg string: year
+    */
     function showCalendar(month, year) {
-
-        let monthAndYear = $("#monthAndYear");
-        let firstDay = (new Date(year, month)).getDay();
-        let selectYear = document.getElementById("year");
-        let selectMonth = document.getElementById("month");
+        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            monthAndYear = $("#monthAndYear"),
+            firstDay = (new Date(year, month)).getDay(),
+            selectYear = document.getElementById("year"),
+            selectMonth = document.getElementById("month");
 
         //body of the calendar
         tbl = document.getElementById("calendar-body");
@@ -285,7 +277,7 @@ $(document).ready(function (e) {
                     date++;
                 }
             }
-            //appending each row into calendar body.
+            //append each row into calendar body.
             tbl.append(row);
         }
     }
