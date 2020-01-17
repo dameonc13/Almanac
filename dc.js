@@ -1,118 +1,64 @@
-const startWeek = moment().startOf('year').month();
-const endWeek = moment().endOf('year').month();
-var currentMonth = moment().format("MMMM");
-$(".month").text(currentMonth)
+let today = new Date();
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
+let selectYear = document.getElementById("year");
+let selectMonth = document.getElementById("month");
+
+let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+let monthAndYear = $("#monthAndYear");
+showCalendar(currentMonth, currentYear);
 
 
 
+function showCalendar(month, year) {
 
-//appends to  calender the first 11 weeks of the year
-let calendar = []
-for (var week = startWeek; week < endWeek; week++) {
-    calendar.push({
-        week, 
-        days: Array(7).fill(0).map((n, i) => moment().week(week).startOf('week').clone().add(n + i, 'day'))
-    })
+    let firstDay = (new Date(year, month)).getDay();
+    let daysInMonth = 32 - new Date(year, month, 32).getDate();
+
+    let tbl = $("#calendar-body"); // body of the calendar
+
+    // clearing all previous cells
+    tbl.innerHTML = "";
+
+    // filing data about month and in the page via DOM.
+    monthAndYear.innerHTML = months[month] + " " + year;
+    selectYear.value = year;
+    selectMonth.value = month;
+
+    // creating all cells
+    let date = 1;
+    for (let i = 0; i < 6; i++) {
+        // creates a table row
+        let row = $("<tr>");
+
+        //creating individual cells, filing them up with data.
+        for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < firstDay) {
+                let cell = $("<td>");
+                let cellText = document.createTextNode("");
+                cell.append(cellText);
+                row.append(cell);
+            }
+            else if (date > daysInMonth) {
+                break;
+            }
+
+            else {
+                let cell = $("<td>");
+                let cellText = document.createTextNode(date);
+                if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
+                    cell.addClass("bg-info");
+                } // color today's date
+                cell.append(cellText);
+                row.append(cell);
+                date++;
+            }
+
+
+        }
+
+        tbl.append(row); // appending each row into calendar body.
+    }
+
 }
-
-//for loop extracts from calender array the first week and appends to week1 class
-for (i = 0; i < calendar[0].days.length; i++) {
-    var dayz = JSON.stringify(calendar[1].days[i]._d)
-    var day = dayz.substring(9, 11);
-    var data = $("<button>").text(day);
-    data.addClass("is-child notification is-info tile buttons")
-    data.attr("data-name", day)
-    localStorage.setItem(day, data.attr("data-name") );
-    $(".week1").append(data)
-    //var days = dayz.substring(2, 4);
-
-   
-}
-//for loop extracts from calender array the second week and appends to week2 class
-for (i = 0; i < calendar[0].days.length; i++) {
-    var dayz = JSON.stringify(calendar[2].days[i]._d)
-    var day = dayz.substring(9, 11);
-    var data = $("<button>").html(day);
-    data.addClass("is-child notification is-info tile buttons")
-    data.attr("data-name", day)
-    localStorage.setItem(day, data.attr("data-name") );
-    $(".week2").append(data)
-    //var days = dayz.substring(2, 4);
-
-  
-}
-
-//for loop extracts from calender array the third week and appends to week3 class
-for (i = 0; i < calendar[0].days.length; i++) {
-    var dayz = JSON.stringify(calendar[3].days[i]._d)
-    var day = dayz.substring(9, 11);
-    var data = $("<button>").html(day);
-    data.addClass("is-child notification is-info tile buttons")
-    data.attr("data-name", day)
-    localStorage.setItem(day, data.attr("data-name") );
-    $(".week3").append(data)
-    //var days = dayz.substring(2, 4);
-
-   
-}
-
-//for loop extracts from calender array the fourth week and appends to week4 class
-for (i = 0; i < calendar[0].days.length; i++) {
-    var dayz = JSON.stringify(calendar[4].days[i]._d)
-    var day = dayz.substring(9, 11);
-    var data = $("<button>").html(day);
-    data.addClass("is-child notification is-info tile buttons")
-    data.attr("data-name", day)
-    localStorage.setItem(day, data.attr("data-name") );
-    $(".week4").append(data)
-    //var days = dayz.substring(2, 4);
-
-   
-}
-
-
-//for loop extracts from calender array the fifth week and appends to week5 class
-for (i = 0; i < calendar[0].days.length; i++) {
-    var dayz = JSON.stringify(calendar[5].days[i]._d)
-    var day = dayz.substring(9, 11);
-    var data = $("<button>").html(day);
-    data.addClass("is-child notification is-info tile buttons")
-    data.attr("data-name", day)
-    localStorage.setItem(day, data.attr("data-name") );
-    $(".week5").append(data)
-    //var days = dayz.substring(2, 4);
-
-   
-} 
-
-
-
-// Get the modal
-var modal = $("#myModal")
-
-// Get the button that opens the modal
-var btn = $("button")
-
-// Get the <span> element that closes the modal
-var span = $(".close")
-
-// When the user clicks the button, open the modal 
-$("button").on("click", function(event)  {
-  $(modal).show();
-})
-
-// When the user clicks on <span> (x), close the modal
-$("span").on("click", function(event)  {
-
-    
-  $(modal).hide();
-})
-
-// When the user clicks anywhere outside of the modal, close it
-/*(window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}) */
-
-
