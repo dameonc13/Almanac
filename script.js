@@ -11,13 +11,6 @@ $(document).ready(function (e) {
     var todayDate = new Date();
 
     /*
-    * Global varibles, hold latitude and longitude for geolocation.
-    * Used for obtaining local weather on load.
-    */
-    var lat = "",
-        lon = "";
-
-    /*
     * Global array of strings, holds instances on each month
     */
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -74,52 +67,54 @@ $(document).ready(function (e) {
         //Collect user infomation from text area of #weather-city
         citySearch = $("#weather-city").val().trim()
 
-        let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
-
-        $(".date").text(d);
-
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function (data) {
-
-            $(".weather-location").html(data.name);
-            $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
-            $(".temperature-description").text(data.weather[0].description);
-            $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
-            $(".humidity").text("Humidity: " + data.main.humidity + " %");
-        });
+        let query = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
+        weatherAjax(query);
+        
     });
 
     /* 
     * Get geolocation at load after permission granted.
     */
     navigator.geolocation.getCurrentPosition(function (position) {
-        lat = position.coords.latitude;
-        lon = position.coords.longitude;
-        weatherGeoLocation();
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude;
+        weatherGeoLocation(lat, lon);
     });
 
     /*
-    * Display weather info based on geolocation.
+    * Build the api query to get weather
+    * @arg: string latitude: string of api call for latitude.
+    * @arg: string longitude: string of api call for longitude.
     */
-    function weatherGeoLocation() {
+    function weatherGeoLocation(latitude, longitude) {
 
-        lat = "?lat=" + lat
-        lon = "&lon=" + lon;
+        lat = "?lat=" + latitude;
+        lon = "&lon=" + longitude;
 
-        let weatherApi = "https://api.openweathermap.org/data/2.5/forecast" + lat + lon + "&units=imperial&appid=" + "e1014510ebbf942b1f1d07d44fa4f59b";
+        let query = "https://api.openweathermap.org/data/2.5/weather" + lat + lon + "&units=imperial&appid=" + "e1014510ebbf942b1f1d07d44fa4f59b";
+        weatherAjax(query);
+    }
+
+    /*
+    * Function which runs the ajax for the weather API call.
+    * @arg: query: string which holds weather api query link.
+    */
+    function weatherAjax(query){
+
+        console.log(moment(today, 'LLLL'));
+        $(".date").text(moment(today, 'LLLL'));
 
         $.ajax({
-            url: weatherApi,
+            url: query,
             method: "GET"
-        }).then(function (wData) {
+        }).then(function (data) {
+            console.log(data);
 
-            $(".weather-location").text(wData.city.name);
-            $(".temperature-value").text(Math.round(wData.list[0].main.temp) + "º" + "F");
-            $(".temperature-description").text(wData.list[0].weather[0].description);
-            $(".weather-icon").html("<img src=\"./Asset/" + wData.list[0].weather[0].icon + ".png\" alt=\"" + wData.list[0].weather[0].icon + "\"></img>");
-            $(".humidity").text("Humidity: " + wData.list[0].main.humidity + " %");
+            $(".weather-location").text(data.name);
+            $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
+            $(".temperature-description").text(data.weather[0].description);
+            $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
+            $(".humidity").text("Humidity: " + data.main.humidity + " %");
         });
     }
 
@@ -145,7 +140,7 @@ $(document).ready(function (e) {
                 $(".newstitle" + (i + 1)).html(response.articles[i].title);
                 $(".newslink" + (i + 1)).html("<a href=" + response.articles[i].url + " target=\"_blank\">Read Article</a>");
             }
-            
+
         });
     }
 
