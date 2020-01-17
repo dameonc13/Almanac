@@ -210,8 +210,10 @@ $(document).ready(function (e) {
             //then increment year by 1
             currentYear = currentYear + 1
         }
-
+        
+        //if month ==== 11 (december), month is reset back to 0 (january) because 12 % 12 === 0. But n = (any number less than 12 and greater than 0), so (n % 12 === n). without the modulo, when clicking next on month of december, we get month 13, which is undefined.
         currentMonth = (currentMonth + 1) % 12;
+
         showCalendar(currentMonth, currentYear);
     });
 
