@@ -10,6 +10,42 @@ let monthAndYear = $("#monthAndYear");
 showCalendar(currentMonth, currentYear);
 
 
+function next() {
+    $("#calendar-body").empty()
+    if (currentMonth === 11){
+    currentYear =   currentYear + 1}
+    else {
+        currentYear = currentYear
+
+    }
+    currentMonth = (currentMonth + 1) % 12;
+    showCalendar(currentMonth, currentYear);
+}
+
+function previous() {
+    $("#calendar-body").empty()
+
+    if (currentMonth === 0){
+    currentYear =  currentYear - 1  ;}
+    else {
+        currentYear = currentYear
+     }
+     if (currentMonth === 0) {
+        currentMonth = 11  }
+        else {
+            currentMonth =   currentMonth - 1;
+        }
+    showCalendar(currentMonth, currentYear);
+}
+
+function jump() {
+     $("#calendar-body").empty()
+    currentYear = parseInt(selectYear.value);
+    currentMonth = parseInt(selectMonth.value);
+    showCalendar(currentMonth, currentYear);
+    
+    
+}
 
 function showCalendar(month, year) {
 
