@@ -29,6 +29,19 @@ $(document).ready(function (e) {
     news();
     wordOfTheDay();
 
+    /* 
+    * Get geolocation at load after permission granted for location access.
+    */
+    navigator.geolocation.getCurrentPosition(function (loc) {
+
+        //get coordinates
+        let lat = loc.coords.latitude;
+        let lon = loc.coords.longitude;
+
+        //then head to weatherGeoLocation to build URL
+        weatherGeoLocation(lat, lon);
+    });
+
     /*
     * On this Day in History
     * Finds a fun historical event from this day and populates a tile.
@@ -54,28 +67,20 @@ $(document).ready(function (e) {
         });
     }
 
-    /* 
-    * Get geolocation at load after permission granted for location access.
-    */
-    navigator.geolocation.getCurrentPosition(function (loc) {
-        let lat = loc.coords.latitude;
-        let lon = loc.coords.longitude;
-        weatherGeoLocation(lat, lon);
-    });
-
     /*
     * Listener which runs on click of weather button.
     * Gets weather for searched city.
     */
-   $(".weather-btn").on("click", function (e) {
+    $(".weather-btn").on("click", function (e) {
 
         //first build URL
         let citySearch = $("#weather-city").val().trim(),
             APIkey = "e1014510ebbf942b1f1d07d44fa4f59b",
             query = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
+
         //then, call ajax
         weatherAjax(query);
-    
+
     });
 
     /*
@@ -84,12 +89,12 @@ $(document).ready(function (e) {
     * @arg: string longitude: string of api call for longitude.
     */
     function weatherGeoLocation(latitude, longitude) {
-        
+
         //first, build URL
         lat = "?lat=" + latitude;
         lon = "&lon=" + longitude;
         let query = "https://api.openweathermap.org/data/2.5/weather" + lat + lon + "&units=imperial&appid=" + "e1014510ebbf942b1f1d07d44fa4f59b";
-        
+
         //then, call ajax
         weatherAjax(query);
     }
@@ -99,7 +104,7 @@ $(document).ready(function (e) {
     * After query is retured, populates html accordingly.
     * @arg: query: string which holds weather api query link.
     */
-    function weatherAjax(query){
+    function weatherAjax(query) {
 
         let d = moment().format('LLLL');
         $(".date").text(d);
@@ -108,15 +113,15 @@ $(document).ready(function (e) {
             url: query,
             method: "GET",
             success: function (data) {
-    
+
                 $(".weather-location").text(data.name);
                 $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
                 $(".temperature-description").text(data.weather[0].description);
                 $(".weather-icon").html("<img src=\"./assets/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
                 $(".humidity").text("Humidity: " + data.main.humidity + " %");
             },
-            error: function(jqXHR, textStatus, errorThrown){
-                
+            error: function (jqXHR, textStatus, errorThrown) {
+
                 $(".errorBox").text(textStatus + ": " + errorThrown);
             }
         });
@@ -127,9 +132,8 @@ $(document).ready(function (e) {
     */
     function news() {
 
-        let APIKey = "8cbd36d7b28e470b90b2709797dceca2";
-
-        let queryURL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=' + APIKey;
+        let APIKey = "8cbd36d7b28e470b90b2709797dceca2",
+            queryURL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=' + APIKey;
 
         $.ajax({
             url: queryURL,
@@ -197,7 +201,7 @@ $(document).ready(function (e) {
     * When the next button is clicked on the calendar.
     * Moves the calendar forward one month.
     */
-    $("#next").click(function(e) {
+    $("#next").click(function (e) {
         //empty old calendar
         $("#calendar-body").empty();
 
@@ -215,7 +219,7 @@ $(document).ready(function (e) {
     * When the previous button is clicked on the calendar.
     * Moves the calendar back one month.
     */
-    $("#previous").click(function(e) {
+    $("#previous").click(function (e) {
         //empty old calendar
         $("#calendar-body").empty();
 
@@ -227,7 +231,7 @@ $(document).ready(function (e) {
         }
         else {
             //else keep year and subtract month by 1
-            currentYear = currentYear
+            currentYear = currentYear;
             currentMonth = currentMonth - 1;
         }
 
@@ -239,7 +243,7 @@ $(document).ready(function (e) {
     * Listener which handles when user changes month or year via dropdown.
     */
     $(".jump").on("change", function (e) {
-        
+
         //empty calendar
         $("#calendar-body").empty();
 
@@ -257,7 +261,7 @@ $(document).ready(function (e) {
     * @arg string: year
     */
     function showCalendar(month, year) {
-        
+
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             monthAndYear = $("#monthAndYear"),
             firstDay = (new Date(year, month)).getDay();
@@ -281,6 +285,7 @@ $(document).ready(function (e) {
 
             //create individual cells, populate with data.
             for (let j = 0; j < 7; j++) {
+
                 if (i === 0 && j < firstDay) {
                     cell = document.createElement("td");
                     cellText = document.createTextNode("");
