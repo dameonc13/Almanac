@@ -1,9 +1,14 @@
 $(document).ready(function (e) {
 
     /*
-    * Today's date
+    * Today's date in moment() format
     */
     var today = moment().format("M/D");
+
+    /*
+    * Today's date in Date() format
+    */
+    var todayDate = new Date();
 
     /*
     * Global varibles, hold latitude and longitude for geolocation.
@@ -12,6 +17,19 @@ $(document).ready(function (e) {
     var lat = "",
         lon = "";
 
+    /*
+    * Global array of strings, holds instances on each month
+    */
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    /*
+    * Global instance of the current month as Date Object.
+    * Global instance of current year as Date object.
+    */
+    var currentMonth = todayDate.getMonth(),
+        currentYear = todayDate.getFullYear();
+
+    showCalendar(currentMonth, currentYear);
     onThisDay();
     news();
     wordOfTheDay();
@@ -71,7 +89,6 @@ $(document).ready(function (e) {
             $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
             $(".humidity").text("Humidity: " + data.main.humidity + " %");
         });
-
     });
 
     /* 
@@ -103,7 +120,6 @@ $(document).ready(function (e) {
             $(".temperature-description").text(wData.list[0].weather[0].description);
             $(".weather-icon").html("<img src=\"./Asset/" + wData.list[0].weather[0].icon + ".png\" alt=\"" + wData.list[0].weather[0].icon + "\"></img>");
             $(".humidity").text("Humidity: " + wData.list[0].main.humidity + " %");
-            
         });
     }
 
@@ -186,6 +202,106 @@ $(document).ready(function (e) {
         });
     }
 
+    function next() {
+        $("#calendar-body").empty()
+        if (currentMonth === 11) {
+            currentYear = currentYear + 1
+        }
+        else {
+            currentYear = currentYear
+
+        }
+        currentMonth = (currentMonth + 1) % 12;
+        showCalendar(currentMonth, currentYear);
+    }
+
+    function previous() {
+        $("#calendar-body").empty()
+
+        if (currentMonth === 0) {
+            currentYear = currentYear - 1;
+        }
+        else {
+            currentYear = currentYear
+        }
+        if (currentMonth === 0) {
+            currentMonth = 11
+        }
+        else {
+            currentMonth = currentMonth - 1;
+        }
+        showCalendar(currentMonth, currentYear);
+    }
+
+    function jump() {
+        $("#calendar-body").empty()
+        currentYear = parseInt(selectYear.value);
+        currentMonth = parseInt(selectMonth.value);
+        showCalendar(currentMonth, currentYear);
+    }
+
+    function showCalendar(month, year) {
+
+        let monthAndYear = $("#monthAndYear");
+        let firstDay = (new Date(year, month)).getDay();
+        let selectYear = document.getElementById("year");
+        let selectMonth = document.getElementById("month");
+
+        //body of the calendar
+        tbl = document.getElementById("calendar-body");
+
+        //clear previous cells
+        tbl.innerHTML = "";
+
+        //populate month data
+        monthAndYear.html(months[month] + " " + year);
+        selectYear.value = year;
+        selectMonth.value = month;
+
+        //create all cells
+        let date = 1;
+        for (let i = 0; i < 6; i++) {
+            //create a table row
+            let row = document.createElement("tr");
+
+            //create individual cells, populate with data.
+            for (let j = 0; j < 7; j++) {
+                if (i === 0 && j < firstDay) {
+                    cell = document.createElement("td");
+                    cellText = document.createTextNode("");
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                }
+                else if (date > daysInMonth(month, year)) {
+                    break;
+                }
+
+                else {
+                    cell = document.createElement("td");
+                    cellText = document.createTextNode(date);
+                    if (date === todayDate.getDate() && year === todayDate.getFullYear() && month === todayDate.getMonth()) {
+                        cell.classList.add("bg-info");
+                    }
+                    //highlight today's date
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                    date++;
+                }
+            }
+            //appending each row into calendar body.
+            tbl.append(row);
+        }
+    }
+
+    /*
+    * Helper function determines how many days in a month.
+    * @arg: month: holds value of the month to determine how many days
+    * @arg: year: holds value of the year to determine how many days. This only actually matters for February in leap years.
+    */
+    function daysInMonth(month, year) {
+        return 32 - new Date(year, month, 32).getDate();
+    }
+
     /*
     * Takes a string argument and returns the same string with first letter capitalized.
     * Small helper function used for printing word of day and definition onto screen.
@@ -194,4 +310,5 @@ $(document).ready(function (e) {
         let newString = input.charAt(0).toUpperCase() + input.substring(1);
         return newString;
     }
+
 });
