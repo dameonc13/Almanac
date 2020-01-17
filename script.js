@@ -4,7 +4,7 @@ $(document).ready(function (e) {
     * Today's date in moment() format
     * Used due to different functionality as opposed to Date()
     */
-    var today = moment().format("M/D");
+    var todayMoment = moment().format("M/D");
 
     /*
     * Today's date in Date() format
@@ -31,7 +31,7 @@ $(document).ready(function (e) {
     */
     function onThisDay() {
         let url = "https://byabbe.se/on-this-day/",
-            query = url + today + "/events.json";
+            query = url + todayMoment + "/events.json";
 
         $.ajax({
             url: query,
@@ -65,16 +65,16 @@ $(document).ready(function (e) {
     */
    $(".weather-btn").on("click", function (e) {
 
-    let citySearch = "";
+        let citySearch = "";
 
-    //Create api key and url links 
-    let APIkey = "e1014510ebbf942b1f1d07d44fa4f59b";
+        //Create api key and url links 
+        let APIkey = "e1014510ebbf942b1f1d07d44fa4f59b";
 
-    //Collect user infomation from text area of #weather-city
-    citySearch = $("#weather-city").val().trim()
+        //Collect user infomation from text area of #weather-city
+        citySearch = $("#weather-city").val().trim()
 
-    let query = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
-    weatherAjax(query);
+        let query = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
+        weatherAjax(query);
     
     });
 
@@ -153,8 +153,8 @@ $(document).ready(function (e) {
 
         let randomIndex = localStorage.getItem("wordIndex");
 
-        if ((localStorage.getItem("today") == null) || (localStorage.getItem("today") != today)) {
-            localStorage.setItem("today", today); //... Then, set today in localStorage...
+        if ((localStorage.getItem("today") == null) || (localStorage.getItem("today") != todayMoment)) {
+            localStorage.setItem("today", todayMoment); //... Then, set today in localStorage...
             randomIndex = Math.floor((Math.random() * dictionary.length) + 1); //... Next, calculate new number...
             localStorage.setItem("wordIndex", randomIndex); //... Finally, save index into localStorage.
         }
