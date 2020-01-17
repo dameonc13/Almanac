@@ -57,14 +57,10 @@ $(document).ready(function(e){
 
 
 
-///////////////////////////////////////////////////////
-//p=pauls playground
-
 function news(){
  // API key
  var APIKey = "8cbd36d7b28e470b90b2709797dceca2";
- //var todayDate = moment().format();
-
+ 
  // url to query
  var queryURL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=' + APIKey;
 
@@ -100,19 +96,13 @@ function news(){
    // We store all of the retrieved data inside of an object called "response"
    .then(function(response) {
 
-     // Log the queryURL
-     console.log(queryURL);
-
-     // Log the resulting object
-     console.log(response)
-     //console.log(todayDate);
-    
+        
      for (i=0; i < articles.length; i ++){
        articles[i].title = response.articles[i].title;
        articles[i].url = response.articles[i].url;
-        console.log(articles[i].url);
+      
      }
-
+     /*
      $(".newstitle1").html(articles[0].title);
      $("#newslink1").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
      $(".newstitle2").text(articles[1].title);
@@ -123,9 +113,12 @@ function news(){
      $("#newslink4").html('<a href=" '+ articles[3].url +'" target="_blank">Read Article</a>');
      $(".newstitle5").text(articles[4].title);
      $("#newslink5").html('<a href=" '+ articles[4].url +'" target="_blank">Read Article</a>');
-     
+     */
 
-     
+     for (i = 0; i < articles.length; i++) {
+       $(".newstitle" + (i + 1)).html(articles[i].title);
+       $(".newslink" + (i + 1)).html("<a href=" + articles[i].url + " target=\"_blank\">Read Article</a>");
+     }
 
      });
 }
