@@ -104,14 +104,19 @@ $(document).ready(function (e) {
 
         $.ajax({
             url: query,
-            method: "GET"
-        }).then(function (data) {
-
-            $(".weather-location").text(data.name);
-            $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
-            $(".temperature-description").text(data.weather[0].description);
-            $(".weather-icon").html("<img src=\"./assets/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
-            $(".humidity").text("Humidity: " + data.main.humidity + " %");
+            method: "GET",
+            success: function (data) {
+    
+                $(".weather-location").text(data.name);
+                $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
+                $(".temperature-description").text(data.weather[0].description);
+                $(".weather-icon").html("<img src=\"./assets/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
+                $(".humidity").text("Humidity: " + data.main.humidity + " %");
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                
+                $(".errorBox").text(textStatus + ": " + errorThrown);
+            }
         });
     }
 
