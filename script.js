@@ -3,7 +3,6 @@ $(document).ready(function (e) {
     /*
     * Today's date
     */
-
     var today = moment().format("M/D");
 
     /*
@@ -13,9 +12,6 @@ $(document).ready(function (e) {
     var lat = "",
         lon = "";
 
-
-    let today = moment().format("M/D");
-  
     onThisDay();
     news();
     wordOfTheDay();
@@ -24,22 +20,24 @@ $(document).ready(function (e) {
     * On this Day in History
     * Finds a fun historical event from this day and populates a tile.
     */
-    function onThisDay(){
+    function onThisDay() {
         let url = "https://byabbe.se/on-this-day/",
             query = url + today + "/events.json";
-
 
         $.ajax({
             url: query,
             method: "GET"
-        }).then(function (data) {
-            console.log(data);
-            let index = Math.round(Math.random() * data.events.length);
 
-            $(".onThisDayTitle").html(fact.date + ", " + fact.year);
-            $(".onThisDaySubtitle").html(fact.description);
-            $("#wikipediaTitle").html(fact.wikipedia.title);
-            $(".onThisDayContent").html("<a href=\"" + fact.wikipedia.link + "\" target=\"_blank\">Learn more</a>");
+        }).then(function (data) {
+
+            //holds index for api object
+            let index = Math.floor(Math.random() * data.events.length);
+
+            //add to html
+            $(".onThisDayTitle").html(data.date + ", " + data.events[index].year);
+            $(".onThisDaySubtitle").html(data.events[index].description);
+            $("#wikipediaTitle").html(data.events[index].wikipedia[0].title);
+            $(".onThisDayContent").html("<a href=\"" + data.events[index].wikipedia[0].wikipedia + "\" target=\"_blank\">Learn more</a>");
         });
     }
 
@@ -83,7 +81,7 @@ $(document).ready(function (e) {
         lat = position.coords.latitude;
         lon = position.coords.longitude;
         weatherGeoLocation();
-    })
+    });
 
     /*
     * Display weather info based on geolocation.
@@ -105,9 +103,8 @@ $(document).ready(function (e) {
             $(".temperature-description").text(wData.list[0].weather[0].description);
             $(".weather-icon").html("<img src=\"./Asset/" + wData.list[0].weather[0].icon + ".png\" alt=\"" + wData.list[0].weather[0].icon + "\"></img>");
             $(".humidity").text("Humidity: " + wData.list[0].main.humidity + " %");
-
-        })
-
+            
+        });
     }
 
     /*
