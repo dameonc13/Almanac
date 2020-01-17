@@ -7,10 +7,8 @@
   
   <!-- Bulma -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-
   <!-- style.css -->
   <link rel="stylesheet" href="style.css">
-
   <title>Daily Almanac</title>
 </head>
   <body>
@@ -20,7 +18,17 @@
             <div class="tile is-parent is-vertical">
               <article class="tile is-child notification is-primary">
                 <p class="title">Weather</p>
-                <p class="subtitle">Top tile</p>
+                <p class="subtitle">Daily Weather Forecast</p>
+                <p class="subtitle date"></p>
+                <p class="subtitle weather-location"></p>
+                <p class="subtitle weather-notification"></p>
+                <p class="subtitle weather-icon"></p>
+                <p class="subtitle temperature-description"></p>
+                <p class="subtitle temperature-value"></p> 
+                <p class="subtitle humidity"></p>
+                <p class="subtitle form-group"></p>
+                <input type="text" class="form-control" id="weather-city" placeholder="City Name">
+                <button class="weather-btn">Search City</button>
               </article>
               
               <!-- on this day -->
@@ -33,7 +41,7 @@
                 </div>
               </article>
               <!-- on this day -->
-
+              
             </div>
             <div class="tile is-parent">
               <article class="tile is-child notification is-info">
@@ -60,7 +68,7 @@
             </article>
           </div>
           <!-- word of the day-->
-
+          
         </div>
         <div class="tile is-parent">
           <article class="tile is-child notification is-success">
@@ -86,8 +94,19 @@
       
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    
       <script type="text/javascript" src="wordOfDay.js"></script>
+    
       <script type="text/javascript" src="script.js"></script>
       <script src="https://kit.fontawesome.com/086eaec884.js" crossorigin="anonymous"></script>
   </body>
 </html>
+
+
+
+
+
+
+  
+
+
