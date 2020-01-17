@@ -54,7 +54,7 @@ $(document).ready(function(e){
         if(randomIndex === null){
             randomIndex = Math.floor((Math.random() * dictionary.length) + 1);
             localStorage.setItem("wordIndex", randomIndex);
-        }     
+        }
 
         //get word of day based on dictionary in wordOfDay.js
         let wordOfDay = dictionary[randomIndex];
