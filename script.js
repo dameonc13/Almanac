@@ -5,9 +5,14 @@ $(document).ready(function (e) {
     */
     var today = moment().format("M/D");
 
-    //onThisDay();
-    weatherGeoLocation();
-    // currentWeatherForecast();
+    /*
+    * Global varibles, hold latitude and longitude for geolocation.
+    * Used for obtaining local weather on load.
+    */
+    var lat = "",
+        lon = "";
+
+    onThisDay();
 
     /*
     * On this Day in History
@@ -55,98 +60,62 @@ $(document).ready(function (e) {
         });
     }
 
-
-
-
-    //  create onclick button to call search function 
+    /*
+    * Listener which runs on click of weather button.
+    * Gets weather for searched city.
+    */
     $(".weather-btn").on("click", function (event) {
-        // let alertElement = $(".weather-notification");
-        // let weatherIcon = $(".weather-icon");
-        // let tempValue = $(".temperature-value");
-        // let tempDescription = $(".temperature-description");
-        // let locationElement = $(".weather-location");
-        // let dateElemenet = $(".date");
-        // let cityElement = $("#weather-city");
-        // let btnElement = $(".weather-btn");
+
         let citySearch = "";
+        let d = moment().format('LLLL');
 
-        // //create current date using moment.js 
-        var d = moment().format('LLLL');
-        $(".date").append(d);
-        console.log(d);
-
-        //create api key and url links 
+        //Create api key and url links 
         let APIkey = "e1014510ebbf942b1f1d07d44fa4f59b";
 
-        event.preventDefault();
-
-        //this variable collects the user infomation from the text area
+        //Collect user infomation from text area of #weather-city
         citySearch = $("#weather-city").val().trim()
-        console.log(citySearch);
+
         let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
+
+        $(".date").text(d);
+
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (data) {
-            console.log(data);
-            // set weather data to local storage 
-            localStorage.setItem("cityElement", citySearch);
-            localStorage.setItem("temperature", Math.round(data.main.temp) + "" + "º" + "F");
-            localStorage.setItem("description", data.weather[0].description);
-            localStorage.setItem("icon", data.weather[0].icon);
-            localStorage.setItem("city", data.name);
-            localStorage.setItem("humidity", data.main.humidity + " %");
 
-
-            //display weather data result from storage to HTML page when called 
             $(".weather-location").html(data.name);
             $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
             $(".temperature-description").text(data.weather[0].description);
             $(".weather-icon").html("<img src=\"./Asset/" + data.weather[0].icon + ".png\" alt=\"" + data.weather[0].icon + "\"></img>");
             $(".humidity").text("Humidity: " + data.main.humidity + " %");
-
-
-
         });
 
     });
-    // create function to display stored weather data when page is open 
-    function currentWeatherForecast() {
-        let storedTemp = localStorage.getItem("temperature");
-        let storedWeather = localStorage.getItem("cityElement");
-        let storedDecrip = localStorage.getItem("description");
-        let storedIcon = localStorage.getItem("icon");
-        let storedLocation = localStorage.getItem("city");
-        let storedHumid = localStorage.getItem("humidity");
 
-        $(".temperature-value").text(storedTemp);
-        $(".weather-location").text(storedWeather);
-        $(".temperature-description").text(storedDecrip);
-        $(".weather-icon").html("<img src=\"./Asset/" + storedIcon + ".png\" alt=\"" + storedIcon + "\"></img>");
-        $("#weather-city").text(storedLocation);
-        $(".humidity").text(storedHumid);
-
-
-
-    }
-
-    //create function to get current geolocation availability 
+    /* 
+    * Get geolocation at load after permission granted.
+    */
     navigator.geolocation.getCurrentPosition(function (position) {
-        console.log(position)
-        console.log("latidude = " + position.coords.latitude);
-        console.log("longitude= " + position.coords.longitude);
+        lat = position.coords.latitude;
+        lon = position.coords.longitude;
+        weatherGeoLocation();
     })
 
-    //show weather info based on geolocation 
+    /*
+    * Display weather info based on geolocation.
+    */
     function weatherGeoLocation() {
-        let weatherApi = "https://api.openweathermap.org/data/2.5/forecast?lat=41.4872014&lon=-73.0178592" + "&units=imperial&appid=" + "e1014510ebbf942b1f1d07d44fa4f59b";
+
+        lat = "?lat=" + lat
+        lon = "&lon=" + lon;
+
+        let weatherApi = "https://api.openweathermap.org/data/2.5/forecast" + lat + lon + "&units=imperial&appid=" + "e1014510ebbf942b1f1d07d44fa4f59b";
+
         $.ajax({
             url: weatherApi,
             method: "GET"
         }).then(function (wData) {
-            console.log(wData);
-            console.log(wData.list[0]);
-            console.log(wData.city.name)
 
             $(".weather-location").text(wData.city.name);
             $(".temperature-value").text(Math.round(wData.list[0].main.temp) + "º" + "F");
@@ -155,7 +124,6 @@ $(document).ready(function (e) {
             $(".humidity").text("Humidity: " + wData.list[0].main.humidity + " %");
 
         })
-        
 
     }
 
