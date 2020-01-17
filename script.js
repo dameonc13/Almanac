@@ -53,74 +53,29 @@ $(document).ready(function(e){
                 $(".onThisDayContent").html("<a href=\"" + fact.wikipedia.link + "\" target=\"_blank\">Learn more</a>");
         });
     }
+
+  /*
+  * Function to GET data from NewsAPI and display on the html page.
+  */
+  function news(){  
+  // API key
+    let APIKey = "8cbd36d7b28e470b90b2709797dceca2";
+    
+    // url to query API
+    let queryURL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=' + APIKey;
+
+    // Here we run our AJAX call to the NewsAPI
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+
+      for (let i = 0; i < response.articles.length || i < 5; i++) {
+        $(".newstitle" + (i + 1)).html(response.articles[i].title);
+        $(".newslink" + (i + 1)).html("<a href=" + response.articles[i].url + " target=\"_blank\">Read Article</a>");
+      }
+
+      });
+    }
+
 });
-
-
-
-function news(){
- // API key
- var APIKey = "8cbd36d7b28e470b90b2709797dceca2";
- 
- // url to query
- var queryURL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=' + APIKey;
-
- var articles = [
-   {
-     title: "",
-     url: "",
-  },
-   {
-     title: "",
-     url: ""
-   },
-   {
-     title: "",
-     url: ""
-   },
-   {
-     title: "",
-     url: ""
-   },
-   {
-     title: "",
-     url: ""
-   }
- ];
-
- 
- // Here we run our AJAX call to the NYTimes API
- $.ajax({
-   url: queryURL,
-   method: "GET"
- })
-   // We store all of the retrieved data inside of an object called "response"
-   .then(function(response) {
-
-        
-     for (i=0; i < articles.length; i ++){
-       articles[i].title = response.articles[i].title;
-       articles[i].url = response.articles[i].url;
-      
-     }
-     /*
-     $(".newstitle1").html(articles[0].title);
-     $("#newslink1").html('<a href=" '+ articles[0].url +'" target="_blank">Read Article</a>');
-     $(".newstitle2").text(articles[1].title);
-     $("#newslink2").html('<a href=" '+ articles[1].url +'" target="_blank">Read Article</a>');
-     $(".newstitle3").text(articles[2].title);
-     $("#newslink3").html('<a href=" '+ articles[2].url +'" target="_blank">Read Article</a>');
-     $(".newstitle4").text(articles[3].title);
-     $("#newslink4").html('<a href=" '+ articles[3].url +'" target="_blank">Read Article</a>');
-     $(".newstitle5").text(articles[4].title);
-     $("#newslink5").html('<a href=" '+ articles[4].url +'" target="_blank">Read Article</a>');
-     */
-
-     for (i = 0; i < articles.length; i++) {
-       $(".newstitle" + (i + 1)).html(articles[i].title);
-       $(".newslink" + (i + 1)).html("<a href=" + articles[i].url + " target=\"_blank\">Read Article</a>");
-     }
-
-     });
-}
-
-
