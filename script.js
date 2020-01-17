@@ -6,7 +6,9 @@ $(document).ready(function(e){
     let today = moment().format("M/D");
     
     onThisDay();
+    news();
     wordOfTheDay();
+
 
     /*
     * On this Day in History
@@ -32,6 +34,33 @@ $(document).ready(function(e){
                 $(".onThisDayContent").html("<a href=\"" + data.events[index].wikipedia[0].wikipedia + "\" target=\"_blank\">Learn more</a>");
         });
     }
+
+
+  /*
+  * Function to GET data from NewsAPI and display on the html page.
+  */
+  function news(){  
+  // API key
+    let APIKey = "8cbd36d7b28e470b90b2709797dceca2";
+    
+    // url to query API
+    let queryURL = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=' + APIKey;
+
+    // Here we run our AJAX call to the NewsAPI
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+
+      for (let i = 0; i < response.articles.length || i < 5; i++) {
+        $(".newstitle" + (i + 1)).html(response.articles[i].title);
+        $(".newslink" + (i + 1)).html("<a href=" + response.articles[i].url + " target=\"_blank\">Read Article</a>");
+      }
+
+      });
+    }
+
+});
 
     /*
     * Determines random word of the day and outputs definition(s) & part(s) of speech (adj, noun, etc).
@@ -97,3 +126,4 @@ $(document).ready(function(e){
         return newString;
     }
 });
+
