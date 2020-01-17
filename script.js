@@ -139,11 +139,13 @@ $(document).ready(function (e) {
             method: "GET"
         }).then(function (response) {
 
-            for (let i = 0; i < response.articles.length || i < 5; i++) {
+            for (let i = 0; i < response.articles.length && i < 8; i++) {
+                $(".newsContent").append("<p class=\"subtitle newstitle" + (i + 1) + "\"></p>");
+                $(".newsContent").append("<p class=\"newslink" + (i + 1) + "\"></p>");
                 $(".newstitle" + (i + 1)).html(response.articles[i].title);
                 $(".newslink" + (i + 1)).html("<a href=" + response.articles[i].url + " target=\"_blank\">Read Article</a>");
             }
-
+            
         });
     }
 
