@@ -235,10 +235,19 @@ $(document).ready(function (e) {
         showCalendar(currentMonth, currentYear);
     });
 
+    /*
+    * Listener which handles when user changes month or year via dropdown.
+    */
     $(".jump").on("change", function (e) {
+        
+        //empty calendar
         $("#calendar-body").empty();
+
+        //current year & current month are the text value selected in the dropdown
         currentYear = parseInt(selectYear.value);
         currentMonth = parseInt(selectMonth.value);
+
+        //rebuild calendar
         showCalendar(currentMonth, currentYear);
     });
 
@@ -248,6 +257,7 @@ $(document).ready(function (e) {
     * @arg string: year
     */
     function showCalendar(month, year) {
+        
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             monthAndYear = $("#monthAndYear"),
             firstDay = (new Date(year, month)).getDay();
