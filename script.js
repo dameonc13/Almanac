@@ -15,9 +15,13 @@ $(document).ready(function (e) {
     /*
     * Global instance of the current month as Date Object.
     * Global instance of current year as Date object.
+    * Global instance of the selected year in dropdown. For changing year via dropdown.
+    * Global instance of the selected month in dropdown. For changing month via dropdown.
     */
     var currentMonth = todayDate.getMonth(),
-        currentYear = todayDate.getFullYear();
+        currentYear = todayDate.getFullYear(),
+        selectYear = document.getElementById("year"),
+        selectMonth = document.getElementById("month");
 
     //run all of the individual functions to set up the page at initial load.
     showCalendar(currentMonth, currentYear);
@@ -65,15 +69,11 @@ $(document).ready(function (e) {
     */
    $(".weather-btn").on("click", function (e) {
 
-        let citySearch = "";
-
-        //Create api key and url links 
-        let APIkey = "e1014510ebbf942b1f1d07d44fa4f59b";
-
-        //Collect user infomation from text area of #weather-city
-        citySearch = $("#weather-city").val().trim()
-
-        let query = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
+        //first build URL
+        let citySearch = $("#weather-city").val().trim(),
+            APIkey = "e1014510ebbf942b1f1d07d44fa4f59b",
+            query = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&units=imperial&appid=" + APIkey;
+        //then, call ajax
         weatherAjax(query);
     
     });
@@ -84,11 +84,13 @@ $(document).ready(function (e) {
     * @arg: string longitude: string of api call for longitude.
     */
     function weatherGeoLocation(latitude, longitude) {
-
+        
+        //first, build URL
         lat = "?lat=" + latitude;
         lon = "&lon=" + longitude;
-
         let query = "https://api.openweathermap.org/data/2.5/weather" + lat + lon + "&units=imperial&appid=" + "e1014510ebbf942b1f1d07d44fa4f59b";
+        
+        //then, call ajax
         weatherAjax(query);
     }
 
@@ -191,39 +193,50 @@ $(document).ready(function (e) {
         });
     }
 
+    /*
+    * When the next button is clicked on the calendar.
+    * Moves the calendar forward one month.
+    */
     $("#next").click(function(e) {
-        $("#calendar-body").empty()
+        //empty old calendar
+        $("#calendar-body").empty();
+
+        //if currentMonth is 11 (december)
         if (currentMonth === 11) {
+            //then increment year by 1
             currentYear = currentYear + 1
         }
-        else {
-            currentYear = currentYear
 
-        }
         currentMonth = (currentMonth + 1) % 12;
         showCalendar(currentMonth, currentYear);
     });
 
+    /*
+    * When the previous button is clicked on the calendar.
+    * Moves the calendar back one month.
+    */
     $("#previous").click(function(e) {
-        $("#calendar-body").empty()
+        //empty old calendar
+        $("#calendar-body").empty();
 
+        //if first month of year
         if (currentMonth === 0) {
+            //subtract year & set month to 11 (december)
             currentYear = currentYear - 1;
+            currentMonth = 11;
         }
         else {
+            //else keep year and subtract month by 1
             currentYear = currentYear
-        }
-        if (currentMonth === 0) {
-            currentMonth = 11
-        }
-        else {
             currentMonth = currentMonth - 1;
         }
+
+        //rebuild calendar
         showCalendar(currentMonth, currentYear);
     });
 
-    $(".jump").on("change", function (event) {
-        $("#calendar-body").empty()
+    $(".jump").on("change", function (e) {
+        $("#calendar-body").empty();
         currentYear = parseInt(selectYear.value);
         currentMonth = parseInt(selectMonth.value);
         showCalendar(currentMonth, currentYear);
@@ -237,9 +250,7 @@ $(document).ready(function (e) {
     function showCalendar(month, year) {
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             monthAndYear = $("#monthAndYear"),
-            firstDay = (new Date(year, month)).getDay(),
-            selectYear = document.getElementById("year"),
-            selectMonth = document.getElementById("month");
+            firstDay = (new Date(year, month)).getDay();
 
         //body of the calendar
         tbl = document.getElementById("calendar-body");
