@@ -1,0 +1,9 @@
+.notification .newstitle {
+  margin-bottom: 0 !important;
+  color:black;
+  padding-bottom: 0px;
+}
+
+.notification .newsbtn {
+  margin-top: 20px !important;
+}
