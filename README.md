@@ -9,12 +9,12 @@ Daily Almanac Which Tracks Daily Information a User Might Find Helpful
 4. [Matt Dambra](https://github.com/superrmatt)
 
 ## Table of Contents
-1. [News]()
-2. [Calendar]()
-3. [Word of the day]()
-4. [Weather]()
-5. [Historical event "on this day"]()
-6. [Additional Functionality]()
+1. [News](https://github.com/Carolenesw/Almanac#news)
+2. [Calendar](https://github.com/Carolenesw/Almanac#calendar)
+3. [Word of the day](https://github.com/Carolenesw/Almanac#word-of-the-day)
+4. [Weather](https://github.com/Carolenesw/Almanac#weather)
+5. [Historical event "on this day"](https://github.com/Carolenesw/Almanac#on-this-day)
+6. [Additional Functionality](https://github.com/Carolenesw/Almanac#additional-functionality-possiblities)
 
 
 ### News
