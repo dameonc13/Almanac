@@ -1,9 +1,11 @@
-.notification .newstitle {
-  margin-bottom: 0 !important;
-  color:black;
-  padding-bottom: 0px;
+.weather-btn{
+  width: 100%;
 }
 
-.notification .newsbtn {
-  margin-top: 20px !important;
+.errorBox{
+  color: red;
+}
+
+.newsContent {
+  color: black;
 }
