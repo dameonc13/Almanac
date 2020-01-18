@@ -8,6 +8,8 @@ Daily Almanac Which Tracks Daily Information a User Might Find Helpful
 3. [Dameon Charley](https://github.com/dameonc13)
 4. [Matt Dambra](https://github.com/superrmatt)
 
+## 
+
 ## Table of Contents
 1. [News](https://github.com/Carolenesw/Almanac#news)
 2. [Calendar](https://github.com/Carolenesw/Almanac#calendar)
