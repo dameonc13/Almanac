@@ -114,6 +114,7 @@ $(document).ready(function (e) {
             method: "GET",
             success: function (data) {
 
+                $(".errorBox").empty();
                 $(".weather-location").text(data.name);
                 $(".temperature-value").text(Math.round(data.main.temp) + "º" + "F");
                 $(".temperature-description").text(data.weather[0].description);
