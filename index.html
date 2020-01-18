@@ -1,317 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bulma -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
 
-  <!-- Bulma -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <!-- style.css -->
+    <link rel="stylesheet" href="style.css">
 
+    <title>Daily Almanac</title>
+  </head>
 
-  <!-- style.css -->
-  <link rel="stylesheet" href="style.css">
-  <title>Daily Almanac</title>
-</head>
-
-
-<body>
-  <div class="tile is-ancestor">
-    <div class="tile is-vertical is-10">
-      <div class="tile">
-        <div class="tile is-parent is-vertical">
-          <article class="tile is-child notification is-primary">
-            <p class="title">Weather</p>
-            <p class="subtitle">Top tile</p>
-          </article>
-          <!-- on this day -->
-          <article class="tile is-child notification is-warning onThisDayTile">
-            <p class="title onThisDayTitle"></p>
-            <p class="subtitle onThisDaySubtitle"></p>
-            <div class="content onThisDayContent">
-              <p id="wikipediaTitle"></p>
-              <p id="wikipediaLink"></p>
-=======
   <body>
     <div class="tile is-ancestor">
-        <div class="tile is-vertical is-8">
-          <div class="tile">
-            <div class="tile is-parent is-vertical">
-              <article class="tile is-child notification is-primary">
-                <p class="title">Weather</p>
-                <p class="subtitle">Daily Weather Forecast</p>
-                <p class="subtitle date"></p>
-                <p class="subtitle weather-location"></p>
-                <p class="subtitle weather-notification"></p>
-                <p class="subtitle weather-icon"></p>
-                <p class="subtitle temperature-description"></p>
-                <p class="subtitle temperature-value"></p> 
-                <p class="subtitle humidity"></p>
-                <p class="subtitle form-group"></p>
-                <input type="text" class="form-control" id="weather-city" placeholder="City Name">
-                <button class="weather-btn">Search City</button>
-              </article>
-              
-              <!-- on this day -->
-              <article class="tile is-child notification is-warning onThisDayTile">
-                <p class="title onThisDayTitle"></p>
-                <p class="subtitle onThisDaySubtitle"></p>
-                <div class="content onThisDayContent">
-                  <p id="wikipediaTitle"></p>
-                  <p id="wikipediaLink"></p>
-                </div>
-              </article>
-              <!-- on this day -->
-              
-            </div>
-            <div class="tile is-parent">
-              <article class="tile is-child notification is-info">
-                <p class="title">Calendar</p>
-                <p class="subtitle">With an image</p>
-                <figure class="image is-4by3">
-                  <img src="https://bulma.io/images/placeholders/640x480.png">
-                </figure>
-              </article>
-            </div>
-          </div>
-          
-          <!-- word of the day -->
-          <div class="tile is-parent">
-            <article class="tile is-child notification is-danger wordOfTheDayTile">
-              <p class="title wordOfTheDayTitle">Word of the Day</p>
-              <p class="subtitle word"></p>
-              <div class="content">
-                <!-- Content -->
-                <p class="content wordOne"></p>
-                <p class="content wordTwo"></p>
-                <p class="content wordThree"></p>
+      <div class="tile is-vertical is-8">
+        <div class="tile">
+          <div class="tile is-parent is-vertical">
+
+            <!-- Weather Start -->
+            <article class="tile is-child notification is-primary">
+              <p class="title">Weather</p>
+              <p class="subtitle">Daily Weather Forecast</p>
+              <p class="subtitle date"></p>
+              <p class="subtitle weather-location"></p>
+              <p class="subtitle weather-notification"></p>
+              <p class="subtitle weather-icon"></p>
+              <p class="subtitle temperature-description"></p>
+              <p class="subtitle temperature-value"></p>
+              <p class="subtitle humidity"></p>
+              <div class="errorBox"></div>
+              <p class="subtitle form-group"></p>
+              <input type="text" class="form-control weatherSearch" id="weather-city" placeholder="City Name">
+              <button class="btn btn-light weather-btn">Search City</button>
+            </article>
+            <!-- Weather End -->
+
+            <!-- on this day Start -->
+            <article class="tile is-child notification is-warning onThisDayTile">
+              <p class="title onThisDayTitle"></p>
+              <p class="subtitle onThisDaySubtitle"></p>
+              <div class="content onThisDayContent">
+                <p id="wikipediaTitle"></p>
+                <p id="wikipediaLink"></p>
               </div>
             </article>
-          </div>
-          <!-- word of the day-->
-          
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-success">
-            <div class="content newscontent">
-              <p class="title">NEWS</p>
-              <p class="subtitle newstitle newstitle1 is-borderless"></p>
-              <p class="newslink1"></p>
-              <p class="subtitle newstitle newstitle2"></p>
-              <p class="newslink2"></p>
-              <p class="subtitle newstitle newstitle3"></p>
-              <p class="newslink3"></p> 
-              <p class="subtitle newstitle newstitle4"></p>
-              <p class="newslink4"></p> 
-              <p class="subtitle newstitle newstitle5"></p>
-              <p class="newslink5"></p> 
-            <div class="content">
-                <!-- Content -->
-              </div>
+            <!-- on this day End -->
 
+          </div> <!-- end of tile is-parent is-vertical-->
+
+          <!-- Calendar start -->
+          <div class="tile is-parent Calender">
+            <article class="tile is-child notification is-info">
+              <p class="title" id="monthAndYear"></p>
+              <table class="table table-bordered table-responsive-sm" id="calendar">
+                <thead>
+                  <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                  </tr>
+                </thead>
+
+                <tbody id="calendar-body">
+
+                </tbody>
+              </table>
+
+              <div class="form-inline">
+
+                <button class="btn btn-light col-sm-6" id="previous"">Previous Month</button>
+
+                <button class="btn btn-light col-sm-6" id="next">Next Month</button>
+              </div>
+              <br>
+              <div class="row">
+                <div class=col-md-12>
+                  <form class="form-inline">
+                    <label class="lead mr-2 ml-2" for="month">Jump To: </label>
+                    <select class="form-control col-sm-4 jump" name="month" id="month">
+                      <option value=0>Jan</option>
+                      <option value=1>Feb</option>
+                      <option value=2>Mar</option>
+                      <option value=3>Apr</option>
+                      <option value=4>May</option>
+                      <option value=5>Jun</option>
+                      <option value=6>Jul</option>
+                      <option value=7>Aug</option>
+                      <option value=8>Sep</option>
+                      <option value=9>Oct</option>
+                      <option value=10>Nov</option>
+                      <option value=11>Dec</option>
+                    </select>
+
+                    <label for="year"></label>
+                    <select class="form-control col-sm-4 jump" name="year" id="year">
+                      <option value=1990>1990</option>
+                      <option value=1991>1991</option>
+                      <option value=1992>1992</option>
+                      <option value=1993>1993</option>
+                      <option value=1994>1994</option>
+                      <option value=1995>1995</option>
+                      <option value=1996>1996</option>
+                      <option value=1997>1997</option>
+                      <option value=1998>1998</option>
+                      <option value=1999>1999</option>
+                      <option value=2000>2000</option>
+                      <option value=2001>2001</option>
+                      <option value=2002>2002</option>
+                      <option value=2003>2003</option>
+                      <option value=2004>2004</option>
+                      <option value=2005>2005</option>
+                      <option value=2006>2006</option>
+                      <option value=2007>2007</option>
+                      <option value=2008>2008</option>
+                      <option value=2009>2009</option>
+                      <option value=2010>2010</option>
+                      <option value=2011>2011</option>
+                      <option value=2012>2012</option>
+                      <option value=2013>2013</option>
+                      <option value=2014>2014</option>
+                      <option value=2015>2015</option>
+                      <option value=2016>2016</option>
+                      <option value=2017>2017</option>
+                      <option value=2018>2018</option>
+                      <option value=2019>2019</option>
+                      <option value=2020>2020</option>
+                      <option value=2021>2021</option>
+                      <option value=2022>2022</option>
+                      <option value=2023>2023</option>
+                      <option value=2024>2024</option>
+                      <option value=2025>2025</option>
+                      <option value=2026>2026</option>
+                      <option value=2027>2027</option>
+                      <option value=2028>2028</option>
+                      <option value=2029>2029</option>
+                      <option value=2030>2030</option>
+                    </select>
+                  </form>
+                </div>
+              </div>
+          </div>
+          <!-- Calendar end -->
+
+        </div> <!-- end of tile -->
+
+        <div class="tile is-parent">
+          <article class="tile is-child notification is-danger wordOfTheDayTile">
+            <p class="title wordOfTheDayTitle">Word of the Day</p>
+            <p class="subtitle word"></p>
+            <div class="content">
+              <p class="content wordOne"></p>
+              <p class="content wordTwo"></p>
+              <p class="content wordThree"></p>
             </div>
           </article>
         </div>
-        <div class="tile is-parent Calender">
-          <article class="tile is-child notification is-info">
-           <div class="container col-sm-4 col-md-7 col-lg-4 mt-5">
-    <div class="card">
-        <h3 class="card-header" id="monthAndYear"></h3>
-        <table class="table table-bordered table-responsive-sm" id="calendar">
-            <thead>
-            <tr>
-                <th>Sun</th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-            </tr>
-            </thead>
 
-            <tbody id="calendar-body">
+      </div> <!-- end of is-vertical is-8 -->
 
-            </tbody>
-        </table>
-
-        <div class="form-inline">
-
-            <button class="btn btn-outline-primary col-sm-6" id="previous" onclick="previous()">Previous</button>
-
-            <button class="btn btn-outline-primary col-sm-6" id="next" onclick="next()">Next</button>
-        </div>
-        <br/>
-        <div class = "row">
-          <div class = col-md-12>
-        <form class="form-inline">
-            <label class="lead mr-2 ml-2" for="month">Jump To: </label>
-            <select class="form-control col-sm-4" name="month" id="month" onchange="jump()">
-                <option value=0>Jan</option>
-                <option value=1>Feb</option>
-                <option value=2>Mar</option>
-                <option value=3>Apr</option>
-                <option value=4>May</option>
-                <option value=5>Jun</option>
-                <option value=6>Jul</option>
-                <option value=7>Aug</option>
-                <option value=8>Sep</option>
-                <option value=9>Oct</option>
-                <option value=10>Nov</option>
-                <option value=11>Dec</option>
-            </select>
-
-
-            <label for="year"></label><select class="form-control col-sm-4" name="year" id="year" onchange="jump()">
-            <option value=1990>1990</option>
-            <option value=1991>1991</option>
-            <option value=1992>1992</option>
-            <option value=1993>1993</option>
-            <option value=1994>1994</option>
-            <option value=1995>1995</option>
-            <option value=1996>1996</option>
-            <option value=1997>1997</option>
-            <option value=1998>1998</option>
-            <option value=1999>1999</option>
-            <option value=2000>2000</option>
-            <option value=2001>2001</option>
-            <option value=2002>2002</option>
-            <option value=2003>2003</option>
-            <option value=2004>2004</option>
-            <option value=2005>2005</option>
-            <option value=2006>2006</option>
-            <option value=2007>2007</option>
-            <option value=2008>2008</option>
-            <option value=2009>2009</option>
-            <option value=2010>2010</option>
-            <option value=2011>2011</option>
-            <option value=2012>2012</option>
-            <option value=2013>2013</option>
-            <option value=2014>2014</option>
-            <option value=2015>2015</option>
-            <option value=2016>2016</option>
-            <option value=2017>2017</option>
-            <option value=2018>2018</option>
-            <option value=2019>2019</option>
-            <option value=2020>2020</option>
-            <option value=2021>2021</option>
-            <option value=2022>2022</option>
-            <option value=2023>2023</option>
-            <option value=2024>2024</option>
-            <option value=2025>2025</option>
-            <option value=2026>2026</option>
-            <option value=2027>2027</option>
-            <option value=2028>2028</option>
-            <option value=2029>2029</option>
-            <option value=2030>2030</option>
-        </select></form>
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-success">
+          <div class="content newsContent">
+            <p class="title">News</p>
+          </div>
+        </article>
       </div>
-        </div>
+
     </div>
-</div>
-      
+    <!--end of tile is-ancestor-->
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="wordOfDay.js"></script>
+    <script src="https://kit.fontawesome.com/086eaec884.js" crossorigin="anonymous"></script>
 
-      </figure>
-      </article>
-    </div>
-  </div>
-  <div class="tile is-parent">
-    <article class="tile is-child notification is-danger">
-      <p class="title">additional component</p>
-      <p class="subtitle">Aligned with the right tile</p>
-      <div class="content">
-        <!-- Content -->
-      </div>
-    </article>
-  </div>
-  </div>
-  <div class="tile is-parent">
-    <article class="tile is-child notification is-success">
-      <div class="content">
-        <p class="title">NEWS</p>
-        <p class="subtitle">With even more content</p>
-        <div class="content">
-
-
-          <!-- Content -->
-        </div>
-      </div>
-    </article>
-  </div>
-  </div>
-
-  <!-- The Modal -->
-  <div id="myModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h3 class = "range">
-        Today'S Events:
-      </h3>
-      <!-- Modal TimeBlocks-->
-      <div class="form-group">
-        <p>12am</p><textarea id="description" rows="1"></textarea>
-        <p>1am</p><textarea id="description" rows="1"></textarea>
-        <p>2am</p><textarea id="description" rows="1"></textarea>
-        <p>3am</p><textarea id="description" rows="1"></textarea>
-        <p>4am</p><textarea id="description" rows="1"></textarea>
-        <p>5am</p><textarea id="description" rows="1"></textarea>
-        <p>6am</p><textarea id="description" rows="1"></textarea>
-        <p>7am</p><textarea id="description" rows="1"></textarea>
-        <p>8am</p><textarea id="description" rows="1"></textarea>
-        <p>9am</p><textarea id="description" rows="1"></textarea>
-        <p>10am</p><textarea id="description" rows="1"></textarea>
-        <p>11am</p><textarea id="description" rows="1"></textarea>
-        <p>12pm</p><textarea id="description" rows="1"></textarea>
-        <p>1pm</p><textarea id="description" rows="1"></textarea>
-        <p>2pm</p><textarea id="description" rows="1"></textarea>
-        <p>3pm</p><textarea id="description" rows="1"></textarea>
-        <p>4pm</p><textarea id="description" rows="1"></textarea>
-        <p>5pm</p><textarea id="description" rows="1"></textarea>
-        <p>6pm</p><textarea id="description" rows="1"></textarea>
-        <p>7pm</p><textarea id="description" rows="1"></textarea>
-        <p>8pm</p><textarea id="description" rows="1"></textarea>
-        <p>9pm</p><textarea id="description" rows="1"></textarea>
-        <p>10pm</p><textarea id="description" rows="1"></textarea>
-        <p>11pm</p><textarea id="description" rows="1"></textarea>
-      </div>
-      <div>
-        <button id="save">Save</button>
-      </div>
-    </div>
-
-  </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  <script type="text/javascript" src="script.js"></script>
-  <script type="text/javascript" src="dc.js"></script>
-  <script src="https://kit.fontawesome.com/086eaec884.js" crossorigin="anonymous"></script>
-</body>
-
-</html>
-
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    
-      <script type="text/javascript" src="wordOfDay.js"></script>
-    
-      <script type="text/javascript" src="script.js"></script>
-      <script src="https://kit.fontawesome.com/086eaec884.js" crossorigin="anonymous"></script>
   </body>
+
 </html>
-
-
-
-
-
-
-  
-
-
-
