@@ -1,7 +1,6 @@
 /*
 * Dictionary used to query the api for word of the day.
 * Each day, a number is chosen at random indicating the index of this array.
-* 
 */
 var dictionary = [
     "aachen",
