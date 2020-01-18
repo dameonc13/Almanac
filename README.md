@@ -2,7 +2,7 @@
 
 Daily Almanac Which Tracks Daily Information a User Might Find Helpful
 
-## authors: 
+## Authors: 
 1. [Paul Kirschner](https://github.com/kirschnerp)
 2. [Carolene Wilson-Grizzle](https://github.com/Carolenesw)
 3. [Dameon Charley](https://github.com/dameonc13)
@@ -16,6 +16,7 @@ Daily Almanac Which Tracks Daily Information a User Might Find Helpful
 5. [Historical event "on this day"](https://github.com/Carolenesw/Almanac#on-this-day)
 6. [Additional Functionality](https://github.com/Carolenesw/Almanac#additional-functionality-possiblities)
 
+## 
 
 ### News
 Determined via API call to newsapi.org, prints up to 8 articles at one time, and allows the user to follow a link to the full article. Articles are chosen as first, there are no filters about what is being printed. The number of printed articles can be easily manipulated. In the news() function.
